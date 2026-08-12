@@ -1,15 +1,6 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "installCommand": "npm install",
   "framework": "nextjs",
-  "regions": ["sin1"],
-  "env": {
-    "AUTH_URL": "@auth_url",
-    "AUTH_GITHUB_ID": "@auth_github_id",
-    "AUTH_GITHUB_SECRET": "@auth_github_secret",
-    "AUTH_SECRET": "@auth_secret",
-    "DATABASE_URL": "@database_url",
-    "GEMINI_API_KEY": "@gemini_api_key"
-  }
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "outputDirectory": ".next"
 }
