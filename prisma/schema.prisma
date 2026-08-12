@@ -1,0 +1,191 @@
+// DevLaunch AI — Prisma Schema
+// All entities including V2+ future fields (nullable, not surfaced in V1 UI)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────────────────────
+// Auth.js required tables
+// ─────────────────────────────────────────────
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─────────────────────────────────────────────
+// Core application models
+// ─────────────────────────────────────────────
+
+model User {
+  id              String   @id @default(cuid())
+  name            String?
+  email           String?  @unique
+  emailVerified   DateTime?
+  image           String?
+  githubId        String?  @unique
+  githubUsername  String?  @unique
+  githubToken     String?  @db.Text
+  bio             String?  @db.Text
+  location        String?
+  website         String?
+  twitterHandle   String?
+  linkedinUrl     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  accounts    Account[]
+  sessions    Session[]
+  repositories Repository[]
+  portfolio   Portfolio?
+  skills      UserSkill[]
+}
+
+model Repository {
+  id          String   @id @default(cuid())
+  userId      String
+  githubId    String
+  name        String
+  fullName    String
+  description String?  @db.Text
+  language    String?
+  topics      String[] @default([])
+  stars       Int      @default(0)
+  forks       Int      @default(0)
+  watchers    Int      @default(0)
+  size        Int      @default(0)
+  url         String
+  homepage    String?
+  isPrivate   Boolean  @default(false)
+  isFork      Boolean  @default(false)
+  isArchived  Boolean  @default(false)
+  defaultBranch String @default("main")
+  openIssues  Int      @default(0)
+  pushedAt    DateTime?
+  syncedAt    DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  developerInsights DeveloperInsights?
+
+  @@unique([userId, githubId])
+  @@index([userId])
+}
+
+model DeveloperInsights {
+  id           String          @id @default(cuid())
+  repositoryId String          @unique
+  status       InsightsStatus  @default(PENDING)
+
+  // ── V1 fields (MVP — populated & displayed) ──────────────────────────
+  summary          String?  @db.Text
+  highlights       String[] @default([])  // Array of achievement strings
+  techStack        String[] @default([])  // Detected technologies
+  useCases         String?  @db.Text
+  targetAudience   String?  @db.Text
+  complexityScore  Int?                   // 1–10
+
+  // ── V2+ fields (schema-ready, null in V1, not surfaced in UI) ────────
+  resumeBullets        String?  @db.Text  // JSON array of bullet strings
+  interviewQuestions   String?  @db.Text  // JSON array of Q&A objects
+  engineeringSkills    String?  @db.Text  // JSON array of skill names
+  suggestedImprovements String? @db.Text  // JSON array of improvement strings
+  businessValue        String?  @db.Text  // Non-technical value statement
+
+  analyzedAt   DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  repository Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+}
+
+enum InsightsStatus {
+  PENDING
+  ANALYZING
+  DONE
+  ERROR
+}
+
+model UserSkill {
+  id               String    @id @default(cuid())
+  userId           String
+  name             String
+  category         SkillCategory
+  proficiencyScore Int       @default(0)  // 0–100, computed from repo usage
+  repoCount        Int       @default(0)
+  lastUsedAt       DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+enum SkillCategory {
+  LANGUAGE
+  FRAMEWORK
+  LIBRARY
+  DATABASE
+  DEVOPS
+  TOOL
+  OTHER
+}
+
+model Portfolio {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  username       String   @unique  // Used in public URL /{username}
+  headline       String?
+  bio            String?  @db.Text
+  email          String?
+  linkedinUrl    String?
+  twitterHandle  String?
+  websiteUrl     String?
+  isPublic       Boolean  @default(true)
+  theme          String   @default("default")
+  featuredRepoIds String[] @default([])  // Array of Repository.id strings
+  showEmail      Boolean  @default(false)
+  showActivity   Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
