@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Zap, Sparkles, Globe, ArrowRight, Star, GitFork, Code2 } from "lucide-react";
+import { Zap, Sparkles, ArrowRight, Star, GitFork, FileText, ClipboardPaste, Download } from "lucide-react";
 import type { Metadata } from "next";
 
 // Inline GitHub SVG — lucide-react v1.30 dropped brand icons
@@ -18,42 +18,36 @@ function GitHubIcon({ className }: { className?: string }) {
 }
 
 export const metadata: Metadata = {
-  title: "DevLaunch AI — AI-Powered Developer Career Platform",
+  title: "DevLaunch AI — AI Resume Builder for Developers",
   description:
-    "Transform your GitHub profile into a stunning portfolio with AI-powered insights, skill analytics, and a recruiter-friendly public page.",
+    "Paste any job description. AI scans your GitHub projects, picks the best matches, and builds a tailored resume — ready to download in seconds.",
 };
 
 const features = [
   {
-    icon: Sparkles,
-    title: "Developer Insights",
+    icon: ClipboardPaste,
+    title: "Paste the JD",
     description:
-      "Gemini AI analyzes your repositories and generates professional summaries, skill breakdowns, and career highlights.",
+      "Drop in any job description from LinkedIn, Naukri, Indeed, or anywhere. The AI reads every requirement.",
     color: "text-purple-400",
     bg: "bg-purple-400/10",
   },
   {
-    icon: Globe,
-    title: "Public Portfolio",
+    icon: Sparkles,
+    title: "AI Picks Your Best Work",
     description:
-      "Get a beautiful shareable portfolio at devlaunch.ai/username — with hero, projects, skills, and GitHub activity.",
+      "Gemini scans all your GitHub repos and selects the 2–3 most relevant projects for this exact role.",
     color: "text-blue-400",
     bg: "bg-blue-400/10",
   },
   {
-    icon: Code2,
-    title: "Skill Analytics",
+    icon: Download,
+    title: "Download in One Click",
     description:
-      "Visual breakdown of your strongest technologies, coding trends, and AI-suggested areas to explore next.",
+      "Get a clean, ATS-friendly PDF resume with tailored bullet points — written by AI, downloaded in seconds.",
     color: "text-emerald-400",
     bg: "bg-emerald-400/10",
   },
-];
-
-const stats = [
-  { label: "Repositories Analyzed", value: "10K+" },
-  { label: "Portfolios Generated", value: "2K+" },
-  { label: "Skills Mapped", value: "500+" },
 ];
 
 export default function LandingPage() {
@@ -97,15 +91,15 @@ export default function LandingPage() {
 
           <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
             Your GitHub is your{" "}
-            <span className="gradient-text">career story.</span>
+            <span className="gradient-text">resume.</span>
             <br />
-            Let AI tell it.
+            Let AI prove it.
           </h1>
 
           <p className="text-lg text-[hsl(var(--muted-foreground))] max-w-2xl mx-auto mb-10 leading-relaxed">
-            DevLaunch AI transforms your GitHub profile into a professional developer
-            portfolio with AI-generated insights, skill analytics, and a stunning
-            public page — in minutes.
+            Paste any job description. AI scans your GitHub projects, picks the
+            best matches, and builds a tailored resume — ready to download in
+            seconds.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -115,25 +109,25 @@ export default function LandingPage() {
               className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[hsl(var(--primary))] text-white font-semibold hover:bg-[hsl(var(--primary)/0.9)] transition-all duration-200 shadow-lg hover:shadow-[hsl(var(--primary)/0.3)] hover:shadow-xl hover:-translate-y-0.5"
             >
               <GitHubIcon className="w-5 h-5" />
-              Get Started Free
+              Build My Resume Free
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="#features"
               className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-[hsl(var(--border))] text-[hsl(var(--foreground))] font-medium hover:bg-[hsl(var(--accent))] transition-colors"
             >
-              See Features
+              How It Works
             </Link>
           </div>
 
-          {/* Stats */}
-          <div className="flex flex-wrap justify-center gap-8 mt-16">
-            {stats.map((s) => (
-              <div key={s.label} className="text-center">
-                <p className="text-3xl font-bold gradient-text">{s.value}</p>
-                <p className="text-xs text-[hsl(var(--muted-foreground))] mt-1">{s.label}</p>
-              </div>
-            ))}
+          {/* Problem statement */}
+          <div className="mt-16 max-w-xl mx-auto p-5 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.6)] backdrop-blur-sm">
+            <p className="text-sm text-[hsl(var(--muted-foreground))] leading-relaxed">
+              <span className="text-[hsl(var(--foreground))] font-semibold">The problem:</span>{" "}
+              You have 20+ GitHub projects but every job application needs different highlights.
+              Manually rewriting your resume for each role is painful.{" "}
+              <span className="text-violet-400 font-medium">DevLaunch AI does it in 15 seconds.</span>
+            </p>
           </div>
         </div>
       </section>
@@ -142,10 +136,10 @@ export default function LandingPage() {
       <section id="features" className="max-w-6xl mx-auto px-6 py-20">
         <div className="text-center mb-14">
           <h2 className="text-3xl font-bold text-[hsl(var(--foreground))]">
-            Everything you need to land your next role
+            Three steps to a tailored resume
           </h2>
           <p className="text-[hsl(var(--muted-foreground))] mt-3 max-w-xl mx-auto text-sm">
-            From raw GitHub commits to a recruiter-ready career profile — fully automated.
+            Stop rewriting resumes manually. Let AI match your projects to the job.
           </p>
         </div>
 
@@ -171,13 +165,13 @@ export default function LandingPage() {
       <section className="max-w-6xl mx-auto px-6 py-16 border-t border-[hsl(var(--border))]">
         <div className="text-center mb-14">
           <h2 className="text-3xl font-bold">How it works</h2>
-          <p className="text-[hsl(var(--muted-foreground))] mt-2 text-sm">Three steps to your professional portfolio</p>
+          <p className="text-[hsl(var(--muted-foreground))] mt-2 text-sm">One-time setup, unlimited tailored resumes</p>
         </div>
         <div className="grid sm:grid-cols-3 gap-8">
           {[
-            { step: "01", title: "Connect GitHub", desc: "Sign in with GitHub OAuth — we import your public repositories instantly." },
-            { step: "02", title: "Generate Insights", desc: "Gemini AI analyzes each repo and produces professional summaries and skill data." },
-            { step: "03", title: "Share Portfolio", desc: "Your public portfolio is live at devlaunch.ai/username — ready to send to recruiters." },
+            { step: "01", title: "Connect GitHub", desc: "Sign in with GitHub — we import and analyze all your repositories automatically." },
+            { step: "02", title: "Paste Any Job Description", desc: "Copy any JD from LinkedIn, Naukri, or Indeed. AI reads every requirement and keyword." },
+            { step: "03", title: "Download Tailored Resume", desc: "Get a clean PDF with your top 2-3 matching projects, AI-written bullets, and relevant skills." },
           ].map((s) => (
             <div key={s.step} className="relative pl-14">
               <span className="absolute left-0 top-0 text-4xl font-black text-[hsl(var(--primary)/0.15)]">{s.step}</span>
@@ -194,18 +188,18 @@ export default function LandingPage() {
           <div className="absolute inset-0 dot-grid opacity-30" />
           <div className="relative">
             <h2 className="text-3xl font-bold mb-3">
-              Ready to launch your career?
+              Stop rewriting resumes. Start landing interviews.
             </h2>
             <p className="text-[hsl(var(--muted-foreground))] mb-8 max-w-md mx-auto text-sm">
-              Join developers who use DevLaunch AI to showcase their skills and stand out to recruiters.
+              Paste a job description. Download a tailored resume. It&apos;s that simple.
             </p>
             <Link
               href="/login"
               id="bottom-cta-btn"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[hsl(var(--primary))] text-white font-semibold hover:bg-[hsl(var(--primary)/0.9)] transition-all duration-200 shadow-lg hover:-translate-y-0.5"
             >
-              <GitHubIcon className="w-5 h-5" />
-              Start for Free
+              <FileText className="w-5 h-5" />
+              Build My Resume Free
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

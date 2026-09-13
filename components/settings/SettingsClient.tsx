@@ -177,6 +177,7 @@ export type ProfileInitial = {
   name: string | null; bio: string | null; location: string | null;
   website: string | null; twitterHandle: string | null; linkedinUrl: string | null;
   email: string | null; image: string | null; githubUsername: string | null;
+  phone: string | null; education: string | null; currentRole: string | null;
 };
 
 export type PortfolioInitial = {
@@ -208,6 +209,9 @@ export function SettingsClient({ profile, portfolio, repos }: SettingsClientProp
   const [website, setWebsite]           = useState(profile.website ?? "");
   const [twitter, setTwitter]           = useState(profile.twitterHandle ?? "");
   const [linkedin, setLinkedin]       = useState(profile.linkedinUrl ?? "");
+  const [phone, setPhone]             = useState(profile.phone ?? "");
+  const [education, setEducation]     = useState(profile.education ?? "");
+  const [currentRole, setCurrentRole] = useState(profile.currentRole ?? "");
 
   // Portfolio state
   const [headline, setHeadline]         = useState(portfolio.headline ?? "");
@@ -231,7 +235,7 @@ export function SettingsClient({ profile, portfolio, repos }: SettingsClientProp
       const res = await fetch("/api/settings/profile", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, bio, location, website, twitterHandle: twitter, linkedinUrl: linkedin }),
+        body: JSON.stringify({ name, bio, location, website, twitterHandle: twitter, linkedinUrl: linkedin, phone, education, currentRole }),
       });
       if (!res.ok) throw new Error();
       setProfileStatus("saved");
@@ -357,6 +361,21 @@ export function SettingsClient({ profile, portfolio, repos }: SettingsClientProp
               <FloatInput id="twitter" label="Twitter / X handle" value={twitter} onChange={setTwitter} icon={AtSign} />
             </div>
             <FloatInput id="linkedin" label="LinkedIn URL" value={linkedin} onChange={setLinkedin} icon={Link2} />
+          </div>
+
+          {/* Resume fields */}
+          <div className="p-6 rounded-2xl border border-violet-500/20 bg-violet-500/5 space-y-4">
+            <div className="flex items-center gap-2 mb-1">
+              <Sparkles className="w-4 h-4 text-violet-400" />
+              <p className="text-sm font-semibold text-[hsl(var(--foreground))]">Resume Information</p>
+              <span className="px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-violet-500/15 text-violet-400 border border-violet-500/20">FOR AI RESUME</span>
+            </div>
+            <p className="text-xs text-[hsl(var(--muted-foreground))]">These fields are used by the AI Resume Builder to generate your tailored resume.</p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <FloatInput id="phone" label="Phone Number" value={phone} onChange={setPhone} icon={User} />
+              <FloatInput id="currentRole" label="Current Role / Title" value={currentRole} onChange={setCurrentRole} icon={Star} />
+            </div>
+            <FloatInput id="education" label="Education (e.g. B.Tech CS, Delhi University, 2024)" value={education} onChange={setEducation} icon={Globe} />
           </div>
 
           <div className="flex justify-end">

@@ -6,14 +6,15 @@ import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import {
   LayoutDashboard, GitFork, Sparkles, Settings,
-  Zap, ExternalLink, LogOut, Globe, X, Menu,
+  Zap, ExternalLink, LogOut, Globe, X, Menu, FileText,
 } from "lucide-react";
 
 const navItems = [
-  { label: "Dashboard",          href: "/dashboard",    icon: LayoutDashboard },
-  { label: "Repositories",       href: "/repositories", icon: GitFork },
-  { label: "Developer Insights", href: "/skills",       icon: Sparkles },
-  { label: "Settings",           href: "/settings",     icon: Settings },
+  { label: "Dashboard",          href: "/dashboard",    icon: LayoutDashboard, badge: null },
+  { label: "Resume Builder",     href: "/resume",       icon: FileText,        badge: "NEW" },
+  { label: "Repositories",       href: "/repositories", icon: GitFork,         badge: null },
+  { label: "Developer Insights", href: "/skills",       icon: Sparkles,        badge: null },
+  { label: "Settings",           href: "/settings",     icon: Settings,        badge: null },
 ];
 
 interface SidebarProps {
@@ -82,6 +83,11 @@ export function Sidebar({ username, name, image, portfolioUsername }: SidebarPro
                 isActive ? "text-[hsl(var(--primary))]" : "text-[hsl(var(--muted-foreground))] group-hover:text-[hsl(var(--foreground))]"
               }`} />
               {item.label}
+              {item.badge && !isActive && (
+                <span className="ml-auto px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-violet-500/15 text-violet-400 border border-violet-500/20 tracking-wide">
+                  {item.badge}
+                </span>
+              )}
               {isActive && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[hsl(var(--primary))]" />}
             </Link>
           );

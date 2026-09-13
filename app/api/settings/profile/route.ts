@@ -10,6 +10,9 @@ const profileSchema = z.object({
   website:       z.string().url().or(z.literal("")).optional(),
   twitterHandle: z.string().max(50).optional(),
   linkedinUrl:   z.string().url().or(z.literal("")).optional(),
+  phone:         z.string().max(30).optional(),
+  education:     z.string().max(200).optional(),
+  currentRole:   z.string().max(100).optional(),
 });
 
 export async function PATCH(req: NextRequest) {
@@ -40,6 +43,9 @@ export async function PATCH(req: NextRequest) {
         website: true,
         twitterHandle: true,
         linkedinUrl: true,
+        phone: true,
+        education: true,
+        currentRole: true,
       },
     });
 
