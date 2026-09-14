@@ -15,10 +15,11 @@ import { ContactSection } from "@/components/portfolio/ContactSection";
 export async function generateMetadata({
   params,
 }: {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }): Promise<Metadata> {
+  const { username } = await params;
   const portfolio = await prisma.portfolio.findUnique({
-    where: { username: params.username },
+    where: { username },
     include: { user: { select: { name: true, image: true } } },
   });
 
@@ -29,7 +30,7 @@ export async function generateMetadata({
     };
   }
 
-  const name = portfolio.user.name ?? params.username;
+  const name = portfolio.user.name ?? username;
   const title = `${name} — Developer Portfolio`;
   const description =
     portfolio.headline ??
@@ -45,7 +46,7 @@ export async function generateMetadata({
       title,
       description,
       type: "profile",
-      url: `${appUrl}/${params.username}`,
+      url: `${appUrl}/${username}`,
       siteName: "DevLaunch AI",
       ...(avatarUrl ? { images: [{ url: avatarUrl, width: 400, height: 400, alt: name }] } : {}),
     },
@@ -56,7 +57,7 @@ export async function generateMetadata({
       ...(avatarUrl ? { images: [avatarUrl] } : {}),
     },
     robots: { index: true, follow: true },
-    alternates: { canonical: `${appUrl}/${params.username}` },
+    alternates: { canonical: `${appUrl}/${username}` },
   };
 }
 
@@ -64,10 +65,11 @@ export async function generateMetadata({
 export default async function PublicPortfolioPage({
   params,
 }: {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 }) {
+  const { username } = await params;
   const portfolio = await prisma.portfolio.findUnique({
-    where: { username: params.username },
+    where: { username },
     include: {
       user: {
         select: {
@@ -161,14 +163,14 @@ export default async function PublicPortfolioPage({
   return (
     <div className="min-h-screen bg-[hsl(var(--background))]">
       {/* Sticky nav */}
-      <PortfolioNav name={user.name ?? params.username} />
+      <PortfolioNav name={user.name ?? username} />
 
       {/* Hero */}
       <PortfolioHero
         name={user.name}
         headline={portfolio.headline}
         image={user.image}
-        githubUsername={user.githubUsername ?? params.username}
+        githubUsername={user.githubUsername ?? username}
         location={user.location}
         website={user.website}
         email={portfolio.email}
@@ -206,7 +208,7 @@ export default async function PublicPortfolioPage({
               }
             : null,
         }))}
-        ownerUsername={user.githubUsername ?? params.username}
+        ownerUsername={user.githubUsername ?? username}
       />
 
       {/* Skills + Tech Stack */}
@@ -239,7 +241,7 @@ export default async function PublicPortfolioPage({
         website={user.website ?? portfolio.websiteUrl}
         twitterHandle={user.twitterHandle ?? portfolio.twitterHandle}
         linkedinUrl={user.linkedinUrl ?? portfolio.linkedinUrl}
-        githubUsername={user.githubUsername ?? params.username}
+        githubUsername={user.githubUsername ?? username}
       />
 
       {/* Footer */}
