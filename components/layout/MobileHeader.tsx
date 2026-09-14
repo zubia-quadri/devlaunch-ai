@@ -1,6 +1,7 @@
 "use client";
 
-import { Zap, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 export function MobileHeader() {
   function handleOpen() {
@@ -8,23 +9,25 @@ export function MobileHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-30 flex items-center gap-3 px-4 h-14 border-b border-[hsl(var(--border))] bg-[hsl(var(--card)/0.95)] backdrop-blur-md md:hidden">
-      <button
-        onClick={handleOpen}
-        aria-label="Open navigation menu"
-        className="p-2 rounded-xl text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--accent))] transition-colors"
-      >
-        <Menu className="w-5 h-5" />
-      </button>
+    <header className="sticky top-0 z-30 flex items-center justify-between px-4 h-13 border-b border-[hsl(var(--border))] bg-[hsl(var(--card)/0.9)] backdrop-blur-md md:hidden">
+      <div className="flex items-center gap-2.5">
+        <button
+          onClick={handleOpen}
+          aria-label="Open navigation menu"
+          className="p-1.5 rounded-lg border border-[hsl(var(--border))] text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))] transition-colors"
+        >
+          <Menu className="w-4 h-4" />
+        </button>
 
-      <div className="flex items-center gap-2">
-        <div className="flex items-center justify-center w-7 h-7 rounded-lg animated-border p-0.5">
-          <div className="flex items-center justify-center w-full h-full rounded-md bg-[hsl(var(--card))]">
-            <Zap className="w-3.5 h-3.5 text-[hsl(var(--primary))]" />
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 rounded-md bg-[#81ACEC] flex items-center justify-center shadow-xs">
+            <div className="w-2 h-2 bg-[hsl(var(--background))] rounded-[1px]" />
           </div>
+          <span className="font-semibold text-xs tracking-tight text-[hsl(var(--foreground))]">devlaunch</span>
         </div>
-        <span className="font-bold text-sm gradient-text">DevLaunch AI</span>
       </div>
+
+      <ThemeToggle />
     </header>
   );
 }

@@ -1,5 +1,3 @@
-// Server Component — no "use client" needed.
-// AnimatedCounter is a client component rendered as a child — that's fine.
 import { type LucideIcon } from "lucide-react";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 
@@ -12,51 +10,47 @@ interface StatsCardProps {
   delta?: string;
   deltaPositive?: boolean;
   delay?: number;
-  glowClass?: string;
 }
 
 export function StatsCard({
   label,
   value,
   icon: Icon,
-  iconColor,
-  iconBg,
   delta,
   deltaPositive,
-  delay = 0,
-  glowClass = "card-hover",
 }: StatsCardProps) {
   const isNumber = typeof value === "number";
 
   return (
-    <div
-      className={`group flex items-center gap-4 p-5 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] ombre-glow shine animate-fade-in-up ${glowClass}`}
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      {/* Icon */}
-      <div
-        className={`relative flex items-center justify-center w-12 h-12 rounded-xl shrink-0 ${iconBg} transition-transform duration-300 group-hover:scale-110`}
-      >
-        <Icon className={`w-5 h-5 ${iconColor}`} />
+    <div className="paper-card p-4 space-y-2">
+      <div className="flex items-center justify-between">
+        <span className="font-mono text-[10px] uppercase tracking-wider text-[hsl(var(--muted-foreground))]">
+          {label}
+        </span>
+        <div className="w-7 h-7 rounded-md border border-[hsl(var(--border))] bg-[hsl(var(--background))] flex items-center justify-center text-[hsl(var(--foreground))]">
+          <Icon className="w-3.5 h-3.5 opacity-75" />
+        </div>
       </div>
 
-      <div className="min-w-0">
-        <p className="text-2xl font-bold text-[hsl(var(--foreground))] leading-none tabular-nums">
+      <div className="flex items-baseline justify-between pt-1">
+        <p className="text-2xl font-normal font-mono text-[hsl(var(--foreground))] tracking-tight">
           {isNumber ? (
-            <AnimatedCounter value={value as number} duration={900} />
+            <AnimatedCounter value={value as number} duration={600} />
           ) : (
             value
           )}
         </p>
-        <p className="text-xs text-[hsl(var(--muted-foreground))] mt-1">{label}</p>
+
         {delta && (
-          <p
-            className={`text-[10px] mt-0.5 font-medium ${
-              deltaPositive ? "text-emerald-400" : "text-amber-400"
+          <span
+            className={`font-mono text-[10px] px-1.5 py-0.5 rounded ${
+              deltaPositive
+                ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
+                : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
             }`}
           >
             {delta}
-          </p>
+          </span>
         )}
       </div>
     </div>

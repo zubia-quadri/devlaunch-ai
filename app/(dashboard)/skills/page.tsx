@@ -2,24 +2,23 @@ import type { Metadata } from "next";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { Sparkles, Code2, Zap } from "lucide-react";
+import { Sparkles, Code2 } from "lucide-react";
 import { getLanguageColor } from "@/lib/utils";
 import { GenerateBatchButton } from "@/components/insights/GenerateBatchButton";
 import { SkillRing } from "@/components/skills/SkillRing";
 
 export const metadata: Metadata = {
-  title: "Developer Insights — DevLaunch AI",
+  title: "Developer Insights — DevLaunch AI Studio",
   description: "Your technology skills derived from GitHub repositories.",
 };
 
-// Unique gradient pair per language position
-const RING_GRADIENTS = [
-  { color: "#818cf8", glow: "#a855f7" }, // violet
-  { color: "#22d3ee", glow: "#06b6d4" }, // cyan
-  { color: "#34d399", glow: "#10b981" }, // emerald
-  { color: "#fb923c", glow: "#f59e0b" }, // amber
-  { color: "#f472b6", glow: "#e879f9" }, // pink
-  { color: "#60a5fa", glow: "#3b82f6" }, // blue
+const BLUEPRINT_COLORS = [
+  { color: "#81ACEC", glow: "#81ACEC40" },
+  { color: "#5ea685", glow: "#5ea68540" },
+  { color: "#d19a4e", glow: "#d19a4e40" },
+  { color: "#bf616a", glow: "#bf616a40" },
+  { color: "#b48ead", glow: "#b48ead40" },
+  { color: "#88c0d0", glow: "#88c0d040" },
 ];
 
 export default async function SkillsPage() {
@@ -63,80 +62,68 @@ export default async function SkillsPage() {
   const remainingSkills = skills.slice(6);
 
   return (
-    <div className="p-6 space-y-8 max-w-6xl">
-
-      {/* ── Header ── */}
-      <div className="flex items-end justify-between gap-4 flex-wrap animate-fade-in-up">
+    <div className="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-2 h-2 rounded-full bg-[hsl(var(--primary))] animate-pulse-glow" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--muted-foreground))]">
-              Developer Insights
-            </span>
+          <div className="flex items-center gap-2 font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
+            <span>workspace</span>
+            <span>/</span>
+            <span className="text-[hsl(var(--foreground))]">developer-insights</span>
           </div>
-          <h1 className="text-3xl font-bold text-[hsl(var(--foreground))]">
-            Skills &amp; Stack
+          <h1 className="text-xl sm:text-2xl font-medium tracking-tight text-[hsl(var(--foreground))] mt-0.5">
+            skills &amp; tech stack
           </h1>
-          <p className="text-sm text-[hsl(var(--muted-foreground))] mt-1">
-            Proficiency scores derived from {totalRepos} GitHub repositories
+          <p className="font-mono text-xs text-[hsl(var(--muted-foreground))] mt-0.5">
+            derived from {totalRepos} repositories · {discoveredList.length} technologies mapped
           </p>
         </div>
+
         {totalRepos > 0 && <GenerateBatchButton pendingCount={pendingCount} />}
       </div>
 
-      {/* ── Empty state ── */}
+      {/* Empty State */}
       {skills.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-32 text-center animate-fade-in-up">
-          <div className="relative mb-6">
-            <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[hsl(var(--primary)/0.15)] to-violet-500/10 flex items-center justify-center">
-              <Code2 className="w-10 h-10 text-[hsl(var(--primary)/0.5)]" />
-            </div>
-            <div className="absolute inset-0 rounded-3xl bg-[hsl(var(--primary)/0.05)] blur-xl" />
-          </div>
-          <h2 className="text-xl font-bold text-[hsl(var(--foreground))]">No skills yet</h2>
-          <p className="text-sm text-[hsl(var(--muted-foreground))] mt-2 max-w-xs">
-            Import your GitHub repositories first, then skills will be auto-computed.
+        <div className="paper-card p-12 text-center space-y-3">
+          <Code2 className="w-8 h-8 text-[hsl(var(--muted-foreground))] mx-auto opacity-50" />
+          <h2 className="text-sm font-medium text-[hsl(var(--foreground))]">no skills indexed</h2>
+          <p className="text-xs text-[hsl(var(--muted-foreground))] max-w-xs mx-auto">
+            import your repositories first to evaluate your tech stack.
           </p>
         </div>
       )}
 
       {skills.length > 0 && (
         <>
-          {/* ── Ring grid — top languages ── */}
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--muted-foreground))] mb-5 animate-fade-in-up delay-75">
-              Language Proficiency
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {/* Top Language Gauges */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-[hsl(var(--muted-foreground))]">
+                language proficiency
+              </span>
+              <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">top {topRingSkills.length}</span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
               {topRingSkills.map((skill, i) => {
-                const grad = RING_GRADIENTS[i % RING_GRADIENTS.length];
+                const bprint = BLUEPRINT_COLORS[i % BLUEPRINT_COLORS.length];
                 const pct = Math.min(100, skill.proficiencyScore);
                 return (
                   <div
                     key={skill.id}
-                    className="group relative flex flex-col items-center gap-3 p-5 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] ombre-glow shine animate-fade-in-up"
-                    style={{ animationDelay: `${100 + i * 80}ms` }}
+                    className="paper-card p-4 flex flex-col items-center gap-2 text-center"
                   >
-                    {/* Ambient glow behind ring */}
-                    <div
-                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{
-                        background: `radial-gradient(ellipse at 50% 40%, ${grad.color}18 0%, transparent 70%)`,
-                      }}
-                    />
-                    {/* Ring */}
-                    <div className="relative">
-                      <SkillRing pct={pct} color={grad.color} glowColor={grad.glow} size={100} stroke={8} />
-                      <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <span className="text-xl font-bold text-[hsl(var(--foreground))] tabular-nums">
+                    <div className="relative my-1">
+                      <SkillRing pct={pct} color={bprint.color} glowColor={bprint.glow} size={80} stroke={6} />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="font-mono text-base font-medium text-[hsl(var(--foreground))]">
                           {pct}%
                         </span>
                       </div>
                     </div>
-                    {/* Label */}
-                    <div className="text-center">
-                      <p className="text-sm font-semibold text-[hsl(var(--foreground))]">{skill.name}</p>
-                      <p className="text-[10px] text-[hsl(var(--muted-foreground))] mt-0.5">
+                    <div>
+                      <p className="text-xs font-semibold text-[hsl(var(--foreground))] truncate max-w-[100px]">{skill.name}</p>
+                      <p className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
                         {skill.repoCount} repo{skill.repoCount !== 1 ? "s" : ""}
                       </p>
                     </div>
@@ -146,29 +133,29 @@ export default async function SkillsPage() {
             </div>
           </div>
 
-          {/* ── Secondary languages (bar style, compact) ── */}
+          {/* Secondary languages */}
           {remainingSkills.length > 0 && (
-            <div className="p-5 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] animate-fade-in-up delay-300">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--muted-foreground))] mb-4">
-                Other Languages
-              </p>
+            <div className="paper-card p-5 space-y-3">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-[hsl(var(--muted-foreground))]">
+                additional languages
+              </span>
               <div className="grid sm:grid-cols-2 gap-3">
-                {remainingSkills.map((skill, i) => {
+                {remainingSkills.map((skill) => {
                   const color = getLanguageColor(skill.name);
                   const pct = Math.min(100, skill.proficiencyScore);
                   return (
-                    <div key={skill.id} className="space-y-1.5">
+                    <div key={skill.id} className="space-y-1">
                       <div className="flex items-center justify-between text-xs">
                         <div className="flex items-center gap-1.5">
                           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: color }} />
                           <span className="font-medium text-[hsl(var(--foreground))]">{skill.name}</span>
                         </div>
-                        <span className="text-[hsl(var(--muted-foreground))] tabular-nums">{pct}%</span>
+                        <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">{pct}%</span>
                       </div>
-                      <div className="h-1.5 rounded-full bg-[hsl(var(--accent))] overflow-hidden">
+                      <div className="h-1 rounded-full bg-[hsl(var(--muted))] overflow-hidden">
                         <div
-                          className="h-full rounded-full animate-bar-fill"
-                          style={{ width: `${pct}%`, backgroundColor: color, animationDelay: `${400 + i * 50}ms` }}
+                          className="h-full rounded-full"
+                          style={{ width: `${pct}%`, backgroundColor: color }}
                         />
                       </div>
                     </div>
@@ -178,74 +165,47 @@ export default async function SkillsPage() {
             </div>
           )}
 
-          {/* ── AI-discovered tech — bento grid ── */}
+          {/* Discovered Tech Bento Grid */}
           {discoveredList.length > 0 && (
-            <div className="animate-fade-in-up delay-375">
-              <div className="flex items-center gap-2 mb-5">
-                <div className="flex items-center gap-1.5">
-                  <Sparkles className="w-4 h-4 text-[hsl(var(--primary))]" />
-                  <p className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--muted-foreground))]">
-                    AI-Discovered Stack
-                  </p>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-3.5 h-3.5 text-[#81ACEC]" />
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-[hsl(var(--muted-foreground))]">
+                    ai-discovered stack
+                  </span>
                 </div>
-                <div className="flex-1 h-px bg-[hsl(var(--border))]" />
-                <span className="text-[10px] text-[hsl(var(--muted-foreground))]">
+                <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
                   frameworks · libraries · tools
                 </span>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                {discoveredList.map(([tech, count], i) => {
-                  const color = getLanguageColor(tech);
-                  const intensity = Math.min(1, count / (discoveredList[0]?.[1] ?? 1));
-                  return (
-                    <div
-                      key={tech}
-                      className="group relative flex items-center gap-3 p-3.5 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] ombre-glow animate-fade-in-up cursor-default"
-                      style={{ animationDelay: `${400 + i * 30}ms` }}
-                    >
-                      {/* Colored left accent */}
-                      <div
-                        className="w-0.5 h-8 rounded-full shrink-0 opacity-60"
-                        style={{ backgroundColor: color }}
-                      />
-                      <div className="min-w-0 flex-1">
-                        <p className="text-sm font-semibold text-[hsl(var(--foreground))] truncate">{tech}</p>
-                        <div className="flex items-center gap-1.5 mt-1">
-                          <div className="flex-1 h-1 rounded-full bg-[hsl(var(--accent))]">
-                            <div
-                              className="h-full rounded-full"
-                              style={{ width: `${intensity * 100}%`, backgroundColor: color, opacity: 0.7 }}
-                            />
-                          </div>
-                          <span className="text-[10px] text-[hsl(var(--muted-foreground))] shrink-0">
-                            ×{count}
-                          </span>
-                        </div>
-                      </div>
-                      {/* Hover ambient */}
-                      <div
-                        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style={{ background: `${color}08` }}
-                      />
-                    </div>
-                  );
-                })}
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+                {discoveredList.map(([tech, count]) => (
+                  <div
+                    key={tech}
+                    className="paper-card p-3 flex items-center justify-between gap-2"
+                  >
+                    <span className="text-xs font-medium text-[hsl(var(--foreground))] truncate">{tech}</span>
+                    <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[hsl(var(--muted))] text-[hsl(var(--muted-foreground))] shrink-0">
+                      ×{count}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           )}
 
-          {/* ── Pending note ── */}
+          {/* Pending note */}
           {pendingCount > 0 && discoveredList.length === 0 && (
-            <div className="flex items-start gap-3 p-5 rounded-2xl border border-[hsl(var(--primary)/0.15)] bg-[hsl(var(--primary)/0.04)] animate-fade-in-up delay-300">
-              <div className="animate-pulse-glow mt-0.5">
-                <Zap className="w-4 h-4 text-[hsl(var(--primary))]" />
-              </div>
+            <div className="paper-card p-4 flex items-start gap-3">
+              <Sparkles className="w-4 h-4 text-[#81ACEC] shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-semibold text-[hsl(var(--foreground))]">
-                  {pendingCount} {pendingCount === 1 ? "repository hasn't" : "repositories haven't"} been AI-analysed yet
+                <p className="text-xs font-medium text-[hsl(var(--foreground))]">
+                  {pendingCount} {pendingCount === 1 ? "repository needs" : "repositories need"} AI analysis
                 </p>
-                <p className="text-xs text-[hsl(var(--muted-foreground))] mt-1">
-                  Click <strong>Generate Insights</strong> above to discover your full tech stack beyond just primary languages.
+                <p className="text-[11px] text-[hsl(var(--muted-foreground))] mt-0.5">
+                  Click Generate Insights above to discover detected frameworks and tools.
                 </p>
               </div>
             </div>

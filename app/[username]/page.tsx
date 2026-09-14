@@ -161,7 +161,7 @@ export default async function PublicPortfolioPage({
   }));
 
   return (
-    <div className="min-h-screen bg-[hsl(var(--background))]">
+    <div className="min-h-screen bg-[hsl(var(--background))] relative paper-grid">
       {/* Sticky nav */}
       <PortfolioNav name={user.name ?? username} />
 

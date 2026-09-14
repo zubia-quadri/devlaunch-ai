@@ -33,7 +33,7 @@ export function RepoCard({
   hasInsights,
 }: RepoCardProps) {
   return (
-    <div className="group relative flex flex-col gap-3 p-5 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] hover:border-[hsl(var(--primary)/0.4)] hover:-translate-y-0.5 transition-all duration-200">
+    <div className="paper-card p-4 space-y-3 flex flex-col justify-between">
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">

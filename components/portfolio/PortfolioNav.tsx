@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 const sections = [
   { id: "about",      label: "About" },
@@ -50,21 +51,24 @@ export function PortfolioNav({ name }: { name: string }) {
         <span className="text-sm font-semibold text-[hsl(var(--foreground))] truncate">
           {name}
         </span>
-        <nav className="flex items-center gap-1">
-          {sections.map((s) => (
-            <button
-              key={s.id}
-              onClick={() => scrollTo(s.id)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                active === s.id
-                  ? "bg-[hsl(var(--primary)/0.12)] text-[hsl(var(--primary))]"
-                  : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--accent))]"
-              }`}
-            >
-              {s.label}
-            </button>
-          ))}
-        </nav>
+        <div className="flex items-center gap-2">
+          <nav className="hidden sm:flex items-center gap-1">
+            {sections.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => scrollTo(s.id)}
+                className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
+                  active === s.id
+                    ? "bg-[hsl(var(--foreground))] text-[hsl(var(--background))]"
+                    : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted)/0.5)]"
+                }`}
+              >
+                {s.label.toLowerCase()}
+              </button>
+            ))}
+          </nav>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

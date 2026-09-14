@@ -48,7 +48,7 @@ export function ImportButton({ hasRepos }: ImportButtonProps) {
         onClick={handleImport}
         disabled={isLoading}
         id="import-repos-btn"
-        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[hsl(var(--primary))] text-white text-sm font-semibold hover:bg-[hsl(var(--primary)/0.85)] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-150 shadow-sm"
+        className="paper-btn-primary text-xs py-2 px-3.5 rounded-lg shadow-xs disabled:opacity-40 disabled:cursor-not-allowed"
       >
         {isLoading ? (
           <RefreshCw className="w-4 h-4 animate-spin" />

@@ -1,10 +1,10 @@
 'use client';
 import { useState, useRef } from 'react';
 import {
-  Sparkles, Download, FileText, Briefcase, Building2,
-  RotateCcw, CheckCircle, Wand2, Zap, ArrowRight,
-  Phone, GraduationCap, MapPin, Mail, GitFork, Globe,
-  Link2, Copy, Check,
+  Download, FileText, Briefcase, Building2,
+  RotateCcw, CheckCircle, ArrowRight,
+  Phone, MapPin, Mail, GitFork, Globe,
+  Link2, Copy, Check, Sparkles, Terminal,
 } from 'lucide-react';
 
 interface ResumeProject {
@@ -40,19 +40,19 @@ export default function ResumePage() {
   const [result, setResult] = useState<ResumeResult | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [error, setError] = useState('');
-  const [loadingMsg, setLoadingMsg] = useState('Analyzing job description...');
+  const [loadingMsg, setLoadingMsg] = useState('Reading job requirements...');
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [copied, setCopied] = useState(false);
   const resumeRef = useRef<HTMLDivElement>(null);
 
   const loadingMessages = [
-    'Reading job requirements...',
-    'Scanning your GitHub projects...',
-    'Matching skills to role...',
-    'Selecting top projects...',
-    'Writing resume bullets...',
-    'Crafting professional summary...',
-    'Polishing your resume...',
+    'Reading job requirements & technical keywords...',
+    'Scanning your GitHub repositories...',
+    'Evaluating semantic similarity against projects...',
+    'Selecting top 2–3 matching projects...',
+    'Drafting quantified achievement bullets...',
+    'Compiling tailored professional summary...',
+    'Finalizing ATS-compliant paper document...',
   ];
 
   async function handleGenerate() {
@@ -62,14 +62,14 @@ export default function ResumePage() {
     }
     setError('');
     setStep('loading');
-    setLoadingProgress(0);
+    setLoadingProgress(10);
 
     let msgIndex = 0;
     const msgInterval = setInterval(() => {
       msgIndex = (msgIndex + 1) % loadingMessages.length;
       setLoadingMsg(loadingMessages[msgIndex]);
-      setLoadingProgress(prev => Math.min(prev + 14, 95));
-    }, 2000);
+      setLoadingProgress(prev => Math.min(prev + 15, 95));
+    }, 1800);
 
     try {
       const res = await fetch('/api/resume/match', {
@@ -89,7 +89,7 @@ export default function ResumePage() {
         setResult(data.data);
         setUserInfo(data.user);
         setStep('result');
-      }, 500);
+      }, 400);
     } catch {
       clearInterval(msgInterval);
       setError('Network error. Please try again.');
@@ -139,359 +139,298 @@ export default function ResumePage() {
   }
 
   return (
-    <div className="flex-1 p-4 md:p-8 max-w-5xl mx-auto w-full">
+    <div className="flex-1 p-4 md:p-8 max-w-5xl mx-auto w-full relative">
 
-      {/* ── Header ── */}
-      <div className="mb-8">
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/25">
-            <Wand2 className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-[hsl(var(--foreground))] tracking-tight">
-              AI Resume Builder
-            </h1>
-            <p className="text-sm text-[hsl(var(--muted-foreground))] mt-0.5">
-              Paste a job description → AI tailors your resume → Download PDF
-            </p>
-          </div>
+      {/* Breadcrumb & Header */}
+      <div className="mb-6 space-y-1">
+        <div className="flex items-center gap-2 font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
+          <span>workspace</span>
+          <span>/</span>
+          <span className="text-[hsl(var(--foreground))]">resume-builder</span>
+          <span className="paper-tag-blue px-1.5 py-0.2 ml-1 text-[9px]">studio draft</span>
         </div>
+        <h1 className="text-xl md:text-2xl font-medium tracking-tight text-[hsl(var(--foreground))]">
+          resume drafting canvas
+        </h1>
+        <p className="text-xs text-[hsl(var(--muted-foreground))]">
+          paste any target job description to match repositories, compile bullets, and export an ats-optimized pdf.
+        </p>
       </div>
 
-      {/* ── STEP: INPUT ── */}
+      {/* Steps Pill Indicator */}
+      <div className="flex items-center gap-2 mb-6 border-b border-[hsl(var(--border))] pb-3">
+        {[
+          { id: 'input', num: '01', label: 'job specification' },
+          { id: 'loading', num: '02', label: 'semantic analysis' },
+          { id: 'result', num: '03', label: 'export canvas' },
+        ].map((s) => {
+          const isCurrent = step === s.id;
+          const isPassed = (step === 'loading' && s.id === 'input') || (step === 'result' && (s.id === 'input' || s.id === 'loading'));
+          return (
+            <div
+              key={s.id}
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono transition-colors ${
+                isCurrent
+                  ? 'bg-[hsl(var(--foreground))] text-[hsl(var(--background))]'
+                  : isPassed
+                  ? 'text-[hsl(var(--foreground))]'
+                  : 'text-[hsl(var(--muted-foreground)/0.6)]'
+              }`}
+            >
+              <span>[{s.num}]</span>
+              <span className="font-sans font-medium text-[11px]">{s.label}</span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* STEP 1: INPUT */}
       {step === 'input' && (
         <div className="space-y-6 animate-fade-in-up">
-
-          {/* Step Progress */}
-          <div className="flex items-center gap-2 md:gap-3">
-            {[
-              { num: 1, label: 'Paste JD', active: true },
-              { num: 2, label: 'AI Analysis', active: false },
-              { num: 3, label: 'Download', active: false },
-            ].map((s, i) => (
-              <div key={s.num} className="flex items-center gap-2">
-                {i > 0 && (
-                  <div className={`hidden sm:block w-8 md:w-12 h-px ${s.active ? 'bg-violet-500' : 'bg-[hsl(var(--border))]'}`} />
-                )}
-                <div className="flex items-center gap-1.5">
-                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold transition-all ${
-                    s.active
-                      ? 'bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-lg shadow-violet-500/25'
-                      : 'border border-[hsl(var(--border))] text-[hsl(var(--muted-foreground))]'
-                  }`}>
-                    {s.num}
-                  </div>
-                  <span className={`hidden sm:block text-xs font-medium ${
-                    s.active ? 'text-violet-400' : 'text-[hsl(var(--muted-foreground))]'
-                  }`}>
-                    {s.label}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Form Card */}
-          <div className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] overflow-hidden">
-            {/* Card header */}
-            <div className="px-6 py-4 border-b border-[hsl(var(--border))] bg-gradient-to-r from-violet-500/5 to-fuchsia-500/5">
+          <div className="paper-card overflow-hidden">
+            {/* Header */}
+            <div className="px-5 py-3 border-b border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.3)] flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-violet-400" />
-                <span className="text-sm font-semibold text-[hsl(var(--foreground))]">Job Details</span>
+                <FileText className="w-3.5 h-3.5 text-[#81ACEC]" />
+                <span className="text-xs font-semibold text-[hsl(var(--foreground))]">role specification</span>
               </div>
-              <p className="text-xs text-[hsl(var(--muted-foreground))] mt-1">
-                AI will analyze the JD and match your best projects to it
-              </p>
+              <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">gemini 3.6 engine</span>
             </div>
 
-            <div className="p-6 space-y-5">
-              {/* Job title + company */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-[hsl(var(--muted-foreground))] uppercase tracking-wider">
-                    Job Title <span className="normal-case text-[hsl(var(--muted-foreground))]">(optional)</span>
+            <div className="p-5 space-y-4">
+              {/* Optional Job Title & Company */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="font-mono text-[10px] uppercase text-[hsl(var(--muted-foreground))]">
+                    target job title <span className="normal-case opacity-60">(optional)</span>
                   </label>
-                  <div className="relative group">
-                    <Briefcase className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[hsl(var(--muted-foreground))] group-focus-within:text-violet-400 transition-colors" />
+                  <div className="relative">
+                    <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[hsl(var(--muted-foreground))]" />
                     <input
                       value={jobTitle}
                       onChange={e => setJobTitle(e.target.value)}
-                      placeholder="e.g. Senior Frontend Engineer"
-                      className="w-full pl-10 pr-4 py-3 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-[hsl(var(--foreground))] text-sm outline-none focus:border-violet-500/50 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.1)] transition-all placeholder:text-[hsl(var(--muted-foreground)/0.5)]"
+                      placeholder="e.g. Senior Full Stack Engineer"
+                      className="w-full pl-9 pr-3 py-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-xs text-[hsl(var(--foreground))] outline-none focus:border-[#81ACEC] transition-colors"
                     />
                   </div>
                 </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-[hsl(var(--muted-foreground))] uppercase tracking-wider">
-                    Company <span className="normal-case text-[hsl(var(--muted-foreground))]">(optional)</span>
+
+                <div className="space-y-1">
+                  <label className="font-mono text-[10px] uppercase text-[hsl(var(--muted-foreground))]">
+                    company name <span className="normal-case opacity-60">(optional)</span>
                   </label>
-                  <div className="relative group">
-                    <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[hsl(var(--muted-foreground))] group-focus-within:text-violet-400 transition-colors" />
+                  <div className="relative">
+                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[hsl(var(--muted-foreground))]" />
                     <input
                       value={companyName}
                       onChange={e => setCompanyName(e.target.value)}
                       placeholder="e.g. Google"
-                      className="w-full pl-10 pr-4 py-3 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-[hsl(var(--foreground))] text-sm outline-none focus:border-violet-500/50 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.1)] transition-all placeholder:text-[hsl(var(--muted-foreground)/0.5)]"
+                      className="w-full pl-9 pr-3 py-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-xs text-[hsl(var(--foreground))] outline-none focus:border-[#81ACEC] transition-colors"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* JD textarea */}
-              <div className="space-y-1.5">
+              {/* JD Textarea */}
+              <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-semibold text-[hsl(var(--muted-foreground))] uppercase tracking-wider">
-                    Job Description <span className="text-rose-400">*</span>
+                  <label className="font-mono text-[10px] uppercase text-[hsl(var(--muted-foreground))]">
+                    job description <span className="text-rose-500">*</span>
                   </label>
-                  <span className={`text-[10px] font-mono ${
-                    jdText.length > 0 && jdText.length < 50
-                      ? 'text-amber-400'
-                      : jdText.length >= 50
-                        ? 'text-emerald-400'
-                        : 'text-[hsl(var(--muted-foreground))]'
-                  }`}>
-                    {jdText.length} chars {jdText.length > 0 && jdText.length < 50 ? '• need 50+' : ''}
+                  <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
+                    {jdText.length} characters {jdText.length > 0 && jdText.length < 50 ? '(min 50)' : ''}
                   </span>
                 </div>
                 <textarea
                   value={jdText}
                   onChange={e => setJdText(e.target.value)}
-                  placeholder="Paste the full job description from LinkedIn, Naukri, Indeed, etc.&#10;&#10;The more detail you paste, the better the AI can match your projects..."
-                  rows={10}
-                  className="w-full px-4 py-3 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-[hsl(var(--foreground))] text-sm outline-none focus:border-violet-500/50 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.1)] transition-all resize-none leading-relaxed placeholder:text-[hsl(var(--muted-foreground)/0.4)]"
+                  placeholder="Paste the full job description from LinkedIn, Indeed, Naukri, or direct listing...&#10;&#10;DevLaunch AI will extract core competencies and pinpoint the 2–3 repositories that prove your qualifications."
+                  rows={9}
+                  className="w-full p-3 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-xs leading-relaxed text-[hsl(var(--foreground))] outline-none focus:border-[#81ACEC] transition-colors resize-none font-mono"
                 />
               </div>
             </div>
 
-            {/* Card footer */}
-            <div className="px-6 py-4 border-t border-[hsl(var(--border))] bg-[hsl(var(--accent)/0.3)]">
-              {error && (
-                <div className="mb-4 px-4 py-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm flex items-center gap-2">
-                  <span className="shrink-0">⚠️</span> {error}
-                </div>
+            {/* Card Footer */}
+            <div className="px-5 py-3 border-t border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.2)] flex flex-col sm:flex-row items-center justify-between gap-3">
+              {error ? (
+                <p className="text-xs text-rose-500 font-mono">error: {error}</p>
+              ) : (
+                <p className="text-[11px] text-[hsl(var(--muted-foreground))] font-mono">
+                  ai scans your repositories to highlight your best work
+                </p>
               )}
+
               <button
                 onClick={handleGenerate}
                 disabled={jdText.trim().length < 50}
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 disabled:from-gray-700 disabled:to-gray-700 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2.5 shadow-lg shadow-violet-500/20 hover:shadow-violet-500/30 hover:-translate-y-0.5 active:translate-y-0"
+                className="paper-btn-primary text-xs py-2 px-4 rounded-lg w-full sm:w-auto shadow-xs disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                <Sparkles className="w-4 h-4" />
-                Generate Tailored Resume
-                <ArrowRight className="w-4 h-4" />
+                <span>compile tailored resume</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
-              <p className="text-[10px] text-center text-[hsl(var(--muted-foreground))] mt-3">
-                <Zap className="w-3 h-3 inline-block mr-1 text-violet-400" />
-                AI selects your top 2-3 matching projects and writes achievement-oriented resume bullets
-              </p>
             </div>
           </div>
         </div>
       )}
 
-      {/* ── STEP: LOADING ── */}
+      {/* STEP 2: LOADING */}
       {step === 'loading' && (
-        <div className="flex flex-col items-center justify-center py-20 space-y-8 animate-fade-in-up">
-          {/* Animated orb */}
-          <div className="relative w-28 h-28">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 animate-ping" style={{ animationDuration: '2s' }} />
-            <div className="absolute inset-2 rounded-full bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }} />
-            <div className="absolute inset-0 rounded-full border-2 border-violet-500/20" />
-            <div className="absolute inset-0 rounded-full border-2 border-t-violet-500 border-r-fuchsia-500 animate-spin" style={{ animationDuration: '1.5s' }} />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/30">
-                <Wand2 className="w-7 h-7 text-white" />
-              </div>
-            </div>
+        <div className="paper-card p-12 text-center space-y-6 animate-fade-in-up">
+          <div className="w-10 h-10 rounded-lg bg-[#81ACEC] mx-auto flex items-center justify-center animate-pulse">
+            <div className="w-4 h-4 bg-[hsl(var(--background))] rounded-xs" />
           </div>
 
-          <div className="text-center space-y-3 max-w-sm">
-            <p className="text-lg font-bold text-[hsl(var(--foreground))]">{loadingMsg}</p>
-            <p className="text-xs text-[hsl(var(--muted-foreground))]">
-              Analyzing {jdText.length.toLocaleString()} characters of job description
+          <div className="space-y-1.5 max-w-sm mx-auto">
+            <p className="text-sm font-medium text-[hsl(var(--foreground))]">{loadingMsg}</p>
+            <p className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
+              analyzing role requirements across your github profile
             </p>
           </div>
 
-          {/* Progress bar */}
-          <div className="w-64">
-            <div className="h-1.5 rounded-full bg-[hsl(var(--accent))] overflow-hidden">
+          <div className="max-w-xs mx-auto space-y-2">
+            <div className="h-1 w-full bg-[hsl(var(--border))] rounded-full overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-all duration-1000 ease-out"
+                className="h-full bg-[#81ACEC] transition-all duration-300 ease-out"
                 style={{ width: `${loadingProgress}%` }}
               />
             </div>
-            <p className="text-[10px] text-[hsl(var(--muted-foreground))] text-center mt-2 font-mono">
-              {loadingProgress}%
-            </p>
+            <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">{loadingProgress}%</span>
           </div>
         </div>
       )}
 
-      {/* ── STEP: RESULT ── */}
+      {/* STEP 3: RESULT */}
       {step === 'result' && result && userInfo && (
         <div className="space-y-6 animate-fade-in-up">
+          {/* Action Header */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))]">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="text-xs font-semibold text-[hsl(var(--foreground))]">
+                  tailored for {jobTitle || 'selected role'} {companyName ? `at ${companyName}` : ''}
+                </span>
+              </div>
+              <p className="font-mono text-[10px] text-[hsl(var(--muted-foreground))] mt-0.5">
+                {result.selectedProjects.length} projects matched · {result.skills.length} skills highlighted
+              </p>
+            </div>
 
-          {/* Success banner */}
-          <div className="rounded-2xl border border-emerald-500/20 bg-gradient-to-r from-emerald-500/5 to-teal-500/5 p-4">
-            <div className="flex items-center justify-between flex-wrap gap-3">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/15 flex items-center justify-center">
-                  <CheckCircle className="w-5 h-5 text-emerald-400" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-[hsl(var(--foreground))]">
-                    Resume ready {jobTitle ? `for "${jobTitle}"` : ''}
-                    {companyName ? ` at ${companyName}` : ''}
-                  </p>
-                  <p className="text-xs text-[hsl(var(--muted-foreground))]">
-                    {result.selectedProjects.length} projects matched • {result.skills.length} skills highlighted
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => { setStep('input'); setResult(null); setError(''); }}
-                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-[hsl(var(--border))] text-xs font-medium text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--accent))] transition-all"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" /> New
-                </button>
-                <button
-                  onClick={handleCopyText}
-                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-[hsl(var(--border))] text-xs font-medium text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] hover:bg-[hsl(var(--accent))] transition-all"
-                >
-                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                  {copied ? 'Copied!' : 'Copy'}
-                </button>
-                <button
-                  onClick={handleDownloadPDF}
-                  className="flex items-center gap-1.5 px-5 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white text-xs font-bold transition-all shadow-lg shadow-violet-500/20 hover:-translate-y-0.5"
-                >
-                  <Download className="w-3.5 h-3.5" /> Download PDF
-                </button>
-              </div>
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <button
+                onClick={() => { setStep('input'); setResult(null); setError(''); }}
+                className="paper-btn-secondary text-xs py-1.5 px-3 rounded-lg"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>new draft</span>
+              </button>
+
+              <button
+                onClick={handleCopyText}
+                className="paper-btn-secondary text-xs py-1.5 px-3 rounded-lg"
+              >
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copied ? 'copied' : 'copy'}</span>
+              </button>
+
+              <button
+                onClick={handleDownloadPDF}
+                className="paper-btn-primary text-xs py-1.5 px-4 rounded-lg shadow-xs"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>download pdf</span>
+              </button>
             </div>
           </div>
 
-          {/* Matched Projects Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {/* Matched Project Chips */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {result.selectedProjects.map((p, i) => (
-              <div key={p.name} className="group relative rounded-xl border border-violet-500/15 bg-gradient-to-br from-violet-500/5 to-fuchsia-500/5 p-4 hover:border-violet-500/30 transition-all duration-300">
-                <div className="absolute top-3 right-3 w-5 h-5 rounded-md bg-violet-500/15 flex items-center justify-center">
-                  <span className="text-[10px] font-bold text-violet-400">#{i + 1}</span>
+              <div key={p.name} className="p-3 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] text-[#4a77bf] dark:text-[#9ec2f7]">#0{i + 1} project</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                 </div>
-                <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle className="w-4 h-4 text-violet-400 shrink-0" />
-                  <span className="text-sm font-bold text-[hsl(var(--foreground))] truncate">{p.name}</span>
-                </div>
-                <p className="text-[11px] text-[hsl(var(--muted-foreground))] leading-relaxed line-clamp-2">{p.relevanceReason}</p>
-                <div className="flex flex-wrap gap-1 mt-2">
-                  {p.techStack.slice(0, 3).map(t => (
-                    <span key={t} className="px-1.5 py-0.5 rounded-md bg-violet-500/10 text-violet-300 text-[9px] font-semibold">{t}</span>
-                  ))}
-                </div>
+                <p className="text-xs font-semibold text-[hsl(var(--foreground))] truncate">{p.name}</p>
+                <p className="text-[11px] text-[hsl(var(--muted-foreground))] line-clamp-2 leading-relaxed">
+                  {p.relevanceReason}
+                </p>
               </div>
             ))}
           </div>
 
-          {/* Resume Preview */}
-          <div className="rounded-2xl border border-[hsl(var(--border))] overflow-hidden shadow-2xl shadow-black/20">
-            <div className="bg-[hsl(var(--accent)/0.5)] px-5 py-3 flex items-center justify-between border-b border-[hsl(var(--border))]">
-              <div className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-[hsl(var(--muted-foreground))]" />
-                <span className="text-xs font-semibold text-[hsl(var(--muted-foreground))] uppercase tracking-wider">Resume Preview</span>
-              </div>
-              <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-rose-500/60" />
-                <div className="w-2.5 h-2.5 rounded-full bg-amber-500/60" />
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/60" />
-              </div>
-            </div>
-
-            {/* Actual printable resume */}
+          {/* The Physical Paper Drafting Sheet */}
+          <div className="p-4 sm:p-8 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.3)] paper-grid flex justify-center">
             <div
               ref={resumeRef}
-              className="bg-white text-gray-900 px-12 py-10"
-              style={{ fontFamily: "'Georgia', 'Times New Roman', serif", minHeight: '800px' }}
+              className="paper-sheet w-full max-w-2xl px-10 py-10 rounded-sm font-serif text-neutral-900 shadow-md relative"
+              style={{ minHeight: '840px' }}
             >
+              {/* Technical Registration Marks */}
+              <span className="absolute top-2 left-2 font-mono text-[8px] text-neutral-400 select-none">+00.00</span>
+              <span className="absolute top-2 right-2 font-mono text-[8px] text-neutral-400 select-none">+96.00</span>
+
               {/* Header */}
-              <div className="border-b-[3px] border-gray-900 pb-4 mb-6">
-                <h1 className="text-[28px] font-bold text-gray-900 tracking-tight leading-tight">
+              <div className="border-b-[2px] border-neutral-800 pb-4 mb-5">
+                <h1 className="text-2xl font-bold tracking-tight text-neutral-900 leading-tight">
                   {userInfo.name}
                 </h1>
-                <p className="text-[15px] text-gray-500 mt-1 font-medium">
+                <p className="text-xs font-sans text-neutral-600 mt-1 font-medium">
                   {userInfo.currentRole || jobTitle || 'Software Developer'}
                 </p>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-3 text-[12px] text-gray-600">
-                  {userInfo.email && (
-                    <span className="flex items-center gap-1">
-                      <Mail className="w-3 h-3" /> {userInfo.email}
-                    </span>
-                  )}
-                  {userInfo.phone && (
-                    <span className="flex items-center gap-1">
-                      <Phone className="w-3 h-3" /> {userInfo.phone}
-                    </span>
-                  )}
-                  {userInfo.location && (
-                    <span className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3" /> {userInfo.location}
-                    </span>
-                  )}
-                  {userInfo.linkedinUrl && (
-                    <span className="flex items-center gap-1">
-                      <Link2 className="w-3 h-3" /> {userInfo.linkedinUrl.replace('https://', '')}
-                    </span>
-                  )}
-                  {userInfo.githubUsername && (
-                    <span className="flex items-center gap-1">
-                      <GitFork className="w-3 h-3" /> github.com/{userInfo.githubUsername}
-                    </span>
-                  )}
-                  {userInfo.website && (
-                    <span className="flex items-center gap-1">
-                      <Globe className="w-3 h-3" /> {userInfo.website.replace('https://', '')}
-                    </span>
-                  )}
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 font-sans text-[11px] text-neutral-600">
+                  {userInfo.email && <span>{userInfo.email}</span>}
+                  {userInfo.phone && <span>· {userInfo.phone}</span>}
+                  {userInfo.location && <span>· {userInfo.location}</span>}
+                  {userInfo.githubUsername && <span>· github.com/{userInfo.githubUsername}</span>}
+                  {userInfo.linkedinUrl && <span>· {userInfo.linkedinUrl.replace('https://', '')}</span>}
+                  {userInfo.website && <span>· {userInfo.website.replace('https://', '')}</span>}
                 </div>
               </div>
 
               {/* Professional Summary */}
-              <div className="mb-6">
-                <h2 className="text-[11px] font-bold text-gray-900 uppercase tracking-[0.2em] border-b-[1.5px] border-gray-200 pb-1.5 mb-3">
+              <div className="mb-5">
+                <h2 className="font-sans text-[10px] font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-300 pb-1 mb-2">
                   Professional Summary
                 </h2>
-                <p className="text-[13px] text-gray-700 leading-[1.7]">{result.professionalSummary}</p>
+                <p className="font-sans text-xs text-neutral-700 leading-relaxed">
+                  {result.professionalSummary}
+                </p>
               </div>
 
-              {/* Projects */}
-              <div className="mb-6">
-                <h2 className="text-[11px] font-bold text-gray-900 uppercase tracking-[0.2em] border-b-[1.5px] border-gray-200 pb-1.5 mb-3">
-                  Key Projects
+              {/* Selected Projects */}
+              <div className="mb-5">
+                <h2 className="font-sans text-[10px] font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-300 pb-1 mb-3">
+                  Key Technical Projects
                 </h2>
-                {result.selectedProjects.map((project) => (
-                  <div key={project.name} className="mb-4 last:mb-0">
-                    <div className="flex justify-between items-baseline mb-1">
-                      <h3 className="text-[14px] font-bold text-gray-900">{project.name}</h3>
-                      <span className="text-[11px] text-gray-400 ml-4 shrink-0 italic">
-                        {project.techStack.slice(0, 4).join(' · ')}
-                      </span>
+                <div className="space-y-3 font-sans">
+                  {result.selectedProjects.map((p) => (
+                    <div key={p.name} className="space-y-1">
+                      <div className="flex justify-between items-baseline">
+                        <h3 className="text-xs font-bold text-neutral-900">{p.name}</h3>
+                        <span className="text-[10px] text-neutral-500 italic">
+                          {p.techStack.slice(0, 4).join(' · ')}
+                        </span>
+                      </div>
+                      <ul className="space-y-0.5">
+                        {p.bullets.map((b, bi) => (
+                          <li key={bi} className="text-xs text-neutral-700 leading-relaxed">
+                            {b}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                    <ul className="space-y-1">
-                      {project.bullets.map((bullet, bi) => (
-                        <li key={bi} className="text-[13px] text-gray-700 leading-[1.6] pl-0">
-                          {bullet}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
-              {/* Skills */}
-              <div className="mb-6">
-                <h2 className="text-[11px] font-bold text-gray-900 uppercase tracking-[0.2em] border-b-[1.5px] border-gray-200 pb-1.5 mb-3">
-                  Technical Skills
+              {/* Technical Skills */}
+              <div className="mb-5">
+                <h2 className="font-sans text-[10px] font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-300 pb-1 mb-2">
+                  Technical Core Competencies
                 </h2>
-                <p className="text-[13px] text-gray-700 leading-[1.7]">
+                <p className="font-sans text-xs text-neutral-700 leading-relaxed">
                   {result.skills.join('  •  ')}
                 </p>
               </div>
@@ -499,24 +438,13 @@ export default function ResumePage() {
               {/* Education */}
               {userInfo.education && (
                 <div>
-                  <h2 className="text-[11px] font-bold text-gray-900 uppercase tracking-[0.2em] border-b-[1.5px] border-gray-200 pb-1.5 mb-3">
+                  <h2 className="font-sans text-[10px] font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-300 pb-1 mb-2">
                     Education
                   </h2>
-                  <p className="text-[13px] text-gray-700">{userInfo.education}</p>
+                  <p className="font-sans text-xs text-neutral-700">{userInfo.education}</p>
                 </div>
               )}
             </div>
-          </div>
-
-          {/* Bottom action */}
-          <div className="flex justify-center pt-2">
-            <button
-              onClick={handleDownloadPDF}
-              className="flex items-center gap-2.5 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white font-bold text-sm transition-all duration-300 shadow-xl shadow-violet-500/25 hover:shadow-violet-500/40 hover:-translate-y-1"
-            >
-              <Download className="w-5 h-5" />
-              Download Resume as PDF
-            </button>
           </div>
         </div>
       )}

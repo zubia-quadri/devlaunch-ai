@@ -41,29 +41,30 @@ export default async function SettingsPage() {
   const portfolioUsername = portfolio?.username ?? user.githubUsername ?? userId;
 
   return (
-    <div className="p-6 space-y-6 max-w-3xl">
+    <div className="p-4 sm:p-8 space-y-6 max-w-3xl mx-auto w-full">
       {/* Header */}
-      <div className="flex items-end justify-between gap-4 flex-wrap animate-fade-in-up">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-2 h-2 rounded-full bg-[hsl(var(--primary))] animate-pulse-glow" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--muted-foreground))]">
-              Account
-            </span>
+          <div className="flex items-center gap-2 font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
+            <span>workspace</span>
+            <span>/</span>
+            <span className="text-[hsl(var(--foreground))]">settings</span>
           </div>
-          <h1 className="text-3xl font-bold text-[hsl(var(--foreground))]">Settings</h1>
-          <p className="text-sm text-[hsl(var(--muted-foreground))] mt-1">
-            Manage your profile and public portfolio
+          <h1 className="text-xl sm:text-2xl font-medium tracking-tight text-[hsl(var(--foreground))] mt-0.5">
+            profile &amp; portfolio settings
+          </h1>
+          <p className="font-mono text-xs text-[hsl(var(--muted-foreground))] mt-0.5">
+            configure your resume contact info, bio, and live showcase
           </p>
         </div>
         {portfolio?.isPublic && (
           <Link
             href={`/${portfolioUsername}`}
             target="_blank"
-            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-emerald-500/25 bg-emerald-500/8 text-emerald-400 text-xs font-semibold hover:bg-emerald-500/15 transition-all"
+            className="paper-btn-secondary text-xs py-1.5 px-3 rounded-lg self-start sm:self-auto"
           >
-            <ExternalLink className="w-3.5 h-3.5" />
-            View Live Portfolio
+            <ExternalLink className="w-3.5 h-3.5 opacity-60" />
+            <span>view live portfolio</span>
           </Link>
         )}
       </div>

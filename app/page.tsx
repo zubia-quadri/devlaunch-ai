@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Zap, Sparkles, ArrowRight, Star, GitFork, FileText, ClipboardPaste, Download } from "lucide-react";
+import { ArrowRight, Check, Sparkles, FileText, Download, GitFork, ArrowUpRight, Terminal } from "lucide-react";
 import type { Metadata } from "next";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
-// Inline GitHub SVG — lucide-react v1.30 dropped brand icons
 function GitHubIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -18,204 +18,299 @@ function GitHubIcon({ className }: { className?: string }) {
 }
 
 export const metadata: Metadata = {
-  title: "DevLaunch AI — AI Resume Builder for Developers",
+  title: "DevLaunch AI — the connected resume workspace for engineers",
   description:
-    "Paste any job description. AI scans your GitHub projects, picks the best matches, and builds a tailored resume — ready to download in seconds.",
+    "Paste any job description. AI scans your GitHub projects, picks the best matches, and compiles a tailored resume ready to download.",
 };
-
-const features = [
-  {
-    icon: ClipboardPaste,
-    title: "Paste the JD",
-    description:
-      "Drop in any job description from LinkedIn, Naukri, Indeed, or anywhere. The AI reads every requirement.",
-    color: "text-purple-400",
-    bg: "bg-purple-400/10",
-  },
-  {
-    icon: Sparkles,
-    title: "AI Picks Your Best Work",
-    description:
-      "Gemini scans all your GitHub repos and selects the 2–3 most relevant projects for this exact role.",
-    color: "text-blue-400",
-    bg: "bg-blue-400/10",
-  },
-  {
-    icon: Download,
-    title: "Download in One Click",
-    description:
-      "Get a clean, ATS-friendly PDF resume with tailored bullet points — written by AI, downloaded in seconds.",
-    color: "text-emerald-400",
-    bg: "bg-emerald-400/10",
-  },
-];
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 border-b border-[hsl(var(--border))] bg-[hsl(var(--background)/0.8)] backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-7 h-7 rounded-lg animated-border p-0.5">
-              <div className="flex items-center justify-center w-full h-full rounded-md bg-[hsl(var(--background))]">
-                <Zap className="w-3.5 h-3.5 text-[hsl(var(--primary))]" />
-              </div>
+    <div className="min-h-screen bg-[hsl(var(--background))] text-[hsl(var(--foreground))] relative overflow-x-hidden">
+      {/* Blueprint millimeter grid backdrop */}
+      <div className="absolute inset-0 paper-grid opacity-75 pointer-events-none" />
+
+      {/* Floating Paper Island Navbar */}
+      <header className="sticky top-4 z-50 max-w-5xl mx-auto px-4">
+        <nav className="flex items-center justify-between px-4 py-2.5 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.88)] backdrop-blur-md shadow-xs">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-5 h-5 rounded-[5px] bg-[#81ACEC] flex items-center justify-center shadow-xs transition-transform group-hover:scale-105">
+              <div className="w-2 h-2 bg-[hsl(var(--background))] rounded-[1px]" />
             </div>
-            <span className="font-bold text-sm gradient-text">DevLaunch AI</span>
+            <div className="flex items-center gap-1">
+              <span className="font-semibold text-xs tracking-tight text-[hsl(var(--foreground))]">devlaunch</span>
+              <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">/ai</span>
+            </div>
           </Link>
-          <Link
-            href="/login"
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[hsl(var(--primary))] text-white text-sm font-medium hover:bg-[hsl(var(--primary)/0.9)] transition-colors"
-          >
-            <GitHubIcon className="w-4 h-4" />
-            Sign in with GitHub
-          </Link>
-        </div>
-      </nav>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        {/* Background glows */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[hsl(var(--primary)/0.08)] rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-40 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-60 right-1/4 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute inset-0 dot-grid opacity-20" />
-
-        <div className="relative max-w-6xl mx-auto px-6 pt-24 pb-20 text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[hsl(var(--primary)/0.3)] bg-[hsl(var(--primary)/0.08)] text-[hsl(var(--primary))] text-xs font-medium mb-6">
-            <Sparkles className="w-3.5 h-3.5" />
-            Powered by Google Gemini AI
+          <div className="hidden sm:flex items-center gap-6 text-xs text-[hsl(var(--muted-foreground))]">
+            <Link href="#how-it-works" className="hover:text-[hsl(var(--foreground))] transition-colors">how it works</Link>
+            <Link href="#features" className="hover:text-[hsl(var(--foreground))] transition-colors">features</Link>
+            <Link href="#preview" className="hover:text-[hsl(var(--foreground))] transition-colors">draft canvas</Link>
           </div>
 
-          <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
-            Your GitHub is your{" "}
-            <span className="gradient-text">resume.</span>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Link
+              href="/login"
+              className="paper-btn-primary text-xs py-1.5 px-3 rounded-lg shadow-xs flex items-center gap-1.5"
+            >
+              <GitHubIcon className="w-3.5 h-3.5" />
+              <span>sign in</span>
+            </Link>
+          </div>
+        </nav>
+      </header>
+
+      {/* Hero Section */}
+      <main className="relative max-w-5xl mx-auto px-6 pt-16 pb-24 sm:pt-24 sm:pb-32">
+        {/* Technical Status Pill */}
+        <div className="flex justify-center mb-6">
+          <div className="paper-tag paper-tag-blue">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#81ACEC] animate-pulse" />
+            <span>paper.design studio edition v2.4</span>
+          </div>
+        </div>
+
+        {/* Hero Title & Subtitle */}
+        <div className="text-center max-w-3xl mx-auto space-y-5">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight leading-[1.08] text-[hsl(var(--foreground))]">
+            your github is your resume.
             <br />
-            Let AI prove it.
+            <span className="text-[hsl(var(--muted-foreground))]">
+              tailored for every role.
+            </span>
           </h1>
 
-          <p className="text-lg text-[hsl(var(--muted-foreground))] max-w-2xl mx-auto mb-10 leading-relaxed">
-            Paste any job description. AI scans your GitHub projects, picks the
-            best matches, and builds a tailored resume — ready to download in
-            seconds.
+          <p className="text-sm sm:text-base text-[hsl(var(--muted-foreground))] max-w-xl mx-auto leading-relaxed">
+            paste any job description. devlaunch analyzes your repositories, selects the 2–3 most relevant projects, and formats an ats-optimized pdf in seconds.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* Action CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
             <Link
               href="/login"
-              id="hero-cta-btn"
-              className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[hsl(var(--primary))] text-white font-semibold hover:bg-[hsl(var(--primary)/0.9)] transition-all duration-200 shadow-lg hover:shadow-[hsl(var(--primary)/0.3)] hover:shadow-xl hover:-translate-y-0.5"
+              className="paper-btn-primary w-full sm:w-auto text-xs py-2.5 px-5 rounded-lg shadow-sm"
             >
-              <GitHubIcon className="w-5 h-5" />
-              Build My Resume Free
-              <ArrowRight className="w-4 h-4" />
+              <span>build my resume free</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
+
             <Link
-              href="#features"
-              className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-[hsl(var(--border))] text-[hsl(var(--foreground))] font-medium hover:bg-[hsl(var(--accent))] transition-colors"
+              href="#preview"
+              className="paper-btn-secondary w-full sm:w-auto text-xs py-2.5 px-4 rounded-lg"
             >
-              How It Works
+              <span>explore drafting canvas</span>
+              <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
             </Link>
           </div>
-
-          {/* Problem statement */}
-          <div className="mt-16 max-w-xl mx-auto p-5 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.6)] backdrop-blur-sm">
-            <p className="text-sm text-[hsl(var(--muted-foreground))] leading-relaxed">
-              <span className="text-[hsl(var(--foreground))] font-semibold">The problem:</span>{" "}
-              You have 20+ GitHub projects but every job application needs different highlights.
-              Manually rewriting your resume for each role is painful.{" "}
-              <span className="text-violet-400 font-medium">DevLaunch AI does it in 15 seconds.</span>
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section id="features" className="max-w-6xl mx-auto px-6 py-20">
-        <div className="text-center mb-14">
-          <h2 className="text-3xl font-bold text-[hsl(var(--foreground))]">
-            Three steps to a tailored resume
-          </h2>
-          <p className="text-[hsl(var(--muted-foreground))] mt-3 max-w-xl mx-auto text-sm">
-            Stop rewriting resumes manually. Let AI match your projects to the job.
-          </p>
         </div>
 
-        <div className="grid sm:grid-cols-3 gap-6">
-          {features.map((f) => (
-            <div
-              key={f.title}
-              className="glass-card rounded-2xl p-6 hover:border-[hsl(var(--primary)/0.4)] transition-all duration-300 hover:-translate-y-1 group"
-            >
-              <div className={`flex items-center justify-center w-10 h-10 rounded-xl ${f.bg} mb-4`}>
-                <f.icon className={`w-5 h-5 ${f.color}`} />
+        {/* Studio Canvas Preview Mockup */}
+        <section id="preview" className="mt-16 sm:mt-20">
+          <div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] overflow-hidden shadow-lg">
+            {/* Top Chrome Window Bar */}
+            <div className="flex items-center justify-between px-4 py-2.5 border-b border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.4)]">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--border))]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--border))]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--border))]" />
+                <span className="ml-2 font-mono text-[11px] text-[hsl(var(--muted-foreground))]">workspace / resume-builder</span>
               </div>
-              <h3 className="font-semibold text-[hsl(var(--foreground))] mb-2">{f.title}</h3>
-              <p className="text-sm text-[hsl(var(--muted-foreground))] leading-relaxed">
-                {f.description}
+              <div className="flex items-center gap-2">
+                <span className="paper-tag text-[10px]">ats match: 94%</span>
+              </div>
+            </div>
+
+            {/* Canvas Work Area */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[460px]">
+              {/* Left Column: Spec Sheet */}
+              <div className="lg:col-span-5 p-6 border-b lg:border-b-0 lg:border-r border-[hsl(var(--border))] bg-[hsl(var(--background)/0.5)] space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-[hsl(var(--muted-foreground))]">job specification</span>
+                  <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">1,017 chars</span>
+                </div>
+
+                <div className="p-3 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] font-mono text-xs text-[hsl(var(--muted-foreground))] space-y-2">
+                  <div className="text-[hsl(var(--foreground))] font-semibold">Full Stack Developer — Google</div>
+                  <p className="line-clamp-5 leading-relaxed text-[11px]">
+                    Seeking a motivated Full Stack Developer to build scalable web apps across React, Node.js, and cloud databases. Deliver high-performance RESTful APIs, maintain CI/CD pipelines, and collaborate with product teams.
+                  </p>
+                </div>
+
+                <div className="space-y-2 pt-2">
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-[hsl(var(--muted-foreground))]">matched repositories</span>
+                  <div className="space-y-1.5">
+                    {[
+                      { name: "web-vulnerability-scanner", tag: "Next.js · React · Node.js", match: "#1 match" },
+                      { name: "eco-buy", tag: "Express · REST APIs · HTML5", match: "#2 match" },
+                      { name: "mobile-security-scanner", tag: "SAST · CI/CD · Security", match: "#3 match" },
+                    ].map((r) => (
+                      <div key={r.name} className="flex items-center justify-between p-2 rounded-md border border-[hsl(var(--border))] bg-[hsl(var(--card))] text-xs">
+                        <div>
+                          <p className="font-medium text-[hsl(var(--foreground))]">{r.name}</p>
+                          <p className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">{r.tag}</p>
+                        </div>
+                        <span className="font-mono text-[9px] text-[#4a77bf] dark:text-[#9ec2f7]">{r.match}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Physical Paper Resume Sheet */}
+              <div className="lg:col-span-7 p-6 flex items-center justify-center bg-[hsl(var(--muted)/0.25)] paper-grid-dense">
+                <div className="paper-sheet w-full max-w-md p-6 rounded-md font-serif text-neutral-900">
+                  {/* Resume Header */}
+                  <div className="border-b border-neutral-300 pb-3 mb-3">
+                    <h2 className="text-base font-bold tracking-tight text-neutral-900">Zubiya Quadri</h2>
+                    <p className="text-[11px] text-neutral-600 font-sans mt-0.5">Full Stack Developer · github.com/zubia-quadri</p>
+                  </div>
+
+                  {/* Summary */}
+                  <div className="mb-3">
+                    <p className="font-sans text-[9px] uppercase font-bold tracking-wider text-neutral-500 mb-1">Summary</p>
+                    <p className="text-[10px] text-neutral-700 leading-relaxed font-sans">
+                      Versatile Full Stack Developer with hands-on experience designing and deploying scalable web applications across modern JavaScript frameworks, robust Node.js backends, and cloud infrastructure.
+                    </p>
+                  </div>
+
+                  {/* Projects */}
+                  <div className="mb-3">
+                    <p className="font-sans text-[9px] uppercase font-bold tracking-wider text-neutral-500 mb-1">Selected Projects</p>
+                    <div className="space-y-1.5 font-sans">
+                      <div>
+                        <div className="flex justify-between text-[10px] font-bold text-neutral-900">
+                          <span>web-vulnerability-scanner</span>
+                          <span className="font-normal text-neutral-500 text-[9px]">Next.js · Node.js</span>
+                        </div>
+                        <p className="text-[9px] text-neutral-600 leading-snug">
+                          • Engineered automated vulnerability scanner UI with real-time port and SSL diagnostics.
+                        </p>
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-[10px] font-bold text-neutral-900">
+                          <span>eco-buy</span>
+                          <span className="font-normal text-neutral-500 text-[9px]">Express · REST APIs</span>
+                        </div>
+                        <p className="text-[9px] text-neutral-600 leading-snug">
+                          • Built customizable storefront platform for sustainable goods with modular inventory controls.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Skills */}
+                  <div>
+                    <p className="font-sans text-[9px] uppercase font-bold tracking-wider text-neutral-500 mb-1">Core Competencies</p>
+                    <p className="text-[9px] text-neutral-700 font-sans">
+                      React · Next.js · Node.js · Express · REST APIs · Tailwind CSS · CI/CD · Security
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3-Step Architectural Grid */}
+        <section id="how-it-works" className="mt-24 pt-12 border-t border-[hsl(var(--border))]">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-[hsl(var(--muted-foreground))]">system overview</p>
+              <h2 className="text-xl font-medium tracking-tight text-[hsl(var(--foreground))] mt-1">
+                how the paper compiler works
+              </h2>
+            </div>
+            <span className="font-mono text-xs text-[hsl(var(--muted-foreground))]">03 stages</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              {
+                step: "[01]",
+                title: "import & index",
+                desc: "sign in with github. devlaunch pulls your public repositories, commits, and languages into your private studio index.",
+              },
+              {
+                step: "[02]",
+                title: "semantic match",
+                desc: "drop in any job description. gemini ai evaluates role requirements against your code history to pinpoint your top 2-3 projects.",
+              },
+              {
+                step: "[03]",
+                title: "compile & download",
+                desc: "generate a clean, ats-compliant pdf with quantified achievement bullets ready to submit in one click.",
+              },
+            ].map((f) => (
+              <div
+                key={f.step}
+                className="p-5 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] space-y-2 hover:border-[hsl(var(--foreground)/0.3)] transition-colors"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs text-[#4a77bf] dark:text-[#9ec2f7]">{f.step}</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-[hsl(var(--border))]" />
+                </div>
+                <h3 className="text-sm font-semibold text-[hsl(var(--foreground))]">{f.title}</h3>
+                <p className="text-xs text-[hsl(var(--muted-foreground))] leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Feature Grid */}
+        <section id="features" className="mt-16 pt-12 border-t border-[hsl(var(--border))]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-6 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] space-y-3">
+              <span className="paper-tag paper-tag-blue">developer insights</span>
+              <h3 className="text-base font-semibold text-[hsl(var(--foreground))]">automatic tech stack discovery</h3>
+              <p className="text-xs text-[hsl(var(--muted-foreground))] leading-relaxed">
+                go beyond basic github language labels. ai parses repository architectures to detect frameworks, libraries, sast tooling, and databases.
               </p>
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* How it works */}
-      <section className="max-w-6xl mx-auto px-6 py-16 border-t border-[hsl(var(--border))]">
-        <div className="text-center mb-14">
-          <h2 className="text-3xl font-bold">How it works</h2>
-          <p className="text-[hsl(var(--muted-foreground))] mt-2 text-sm">One-time setup, unlimited tailored resumes</p>
-        </div>
-        <div className="grid sm:grid-cols-3 gap-8">
-          {[
-            { step: "01", title: "Connect GitHub", desc: "Sign in with GitHub — we import and analyze all your repositories automatically." },
-            { step: "02", title: "Paste Any Job Description", desc: "Copy any JD from LinkedIn, Naukri, or Indeed. AI reads every requirement and keyword." },
-            { step: "03", title: "Download Tailored Resume", desc: "Get a clean PDF with your top 2-3 matching projects, AI-written bullets, and relevant skills." },
-          ].map((s) => (
-            <div key={s.step} className="relative pl-14">
-              <span className="absolute left-0 top-0 text-4xl font-black text-[hsl(var(--primary)/0.15)]">{s.step}</span>
-              <h3 className="font-semibold text-[hsl(var(--foreground))] mb-2">{s.title}</h3>
-              <p className="text-sm text-[hsl(var(--muted-foreground))] leading-relaxed">{s.desc}</p>
+            <div className="p-6 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] space-y-3">
+              <span className="paper-tag paper-tag-blue">shareable portfolio</span>
+              <h3 className="text-base font-semibold text-[hsl(var(--foreground))]">live public showcase</h3>
+              <p className="text-xs text-[hsl(var(--muted-foreground))] leading-relaxed">
+                every member gets an executive public portfolio URL at devlaunch.ai/username to share directly with founders and hiring teams.
+              </p>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* CTA */}
-      <section className="max-w-6xl mx-auto px-6 py-20 text-center">
-        <div className="relative overflow-hidden rounded-3xl border border-[hsl(var(--primary)/0.2)] bg-[hsl(var(--primary)/0.05)] p-12">
-          <div className="absolute inset-0 dot-grid opacity-30" />
-          <div className="relative">
-            <h2 className="text-3xl font-bold mb-3">
-              Stop rewriting resumes. Start landing interviews.
-            </h2>
-            <p className="text-[hsl(var(--muted-foreground))] mb-8 max-w-md mx-auto text-sm">
-              Paste a job description. Download a tailored resume. It&apos;s that simple.
-            </p>
+        {/* Bottom CTA Banner */}
+        <section className="mt-20 p-8 sm:p-12 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] text-center space-y-4">
+          <div className="w-8 h-8 rounded-lg bg-[#81ACEC] mx-auto flex items-center justify-center">
+            <div className="w-3 h-3 bg-[hsl(var(--background))] rounded-[1.5px]" />
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-normal tracking-tight text-[hsl(var(--foreground))]">
+            ready to ship your next career move?
+          </h2>
+          <p className="text-xs sm:text-sm text-[hsl(var(--muted-foreground))] max-w-md mx-auto">
+            connect your github in seconds. generate tailored resumes for every application.
+          </p>
+          <div className="pt-2">
             <Link
               href="/login"
-              id="bottom-cta-btn"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[hsl(var(--primary))] text-white font-semibold hover:bg-[hsl(var(--primary)/0.9)] transition-all duration-200 shadow-lg hover:-translate-y-0.5"
+              className="paper-btn-primary text-xs py-2.5 px-6 rounded-lg"
             >
-              <FileText className="w-5 h-5" />
-              Build My Resume Free
-              <ArrowRight className="w-4 h-4" />
+              <span>get started for free</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
       {/* Footer */}
-      <footer className="border-t border-[hsl(var(--border))] py-8">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-[hsl(var(--border))] py-8 px-6">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-[hsl(var(--muted-foreground))]">
           <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-[hsl(var(--primary))]" />
-            <span className="text-sm font-semibold gradient-text">DevLaunch AI</span>
+            <div className="w-3.5 h-3.5 rounded-[3px] bg-[#81ACEC]" />
+            <span>devlaunch.ai studio</span>
           </div>
-          <div className="flex items-center gap-4 text-xs text-[hsl(var(--muted-foreground))]">
-            <span className="flex items-center gap-1"><Star className="w-3 h-3" /> Built with Next.js + Gemini</span>
-            <span className="flex items-center gap-1"><GitFork className="w-3 h-3" /> Open to contributions</span>
+          <div className="flex items-center gap-6">
+            <span>built on web standards</span>
+            <span>next.js · prisma · gemini</span>
           </div>
         </div>
       </footer>

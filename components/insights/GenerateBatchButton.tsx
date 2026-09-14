@@ -39,7 +39,7 @@ export function GenerateBatchButton({ pendingCount }: GenerateBatchButtonProps) 
         onClick={handleBatch}
         disabled={isLoading || pendingCount === 0}
         id="batch-insights-btn"
-        className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-semibold hover:opacity-90 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 shadow-sm"
+        className="paper-btn-primary text-xs py-2 px-3.5 rounded-lg shadow-xs disabled:opacity-40 disabled:cursor-not-allowed"
       >
         {isLoading ? (
           <Loader2 className="w-4 h-4 animate-spin" />

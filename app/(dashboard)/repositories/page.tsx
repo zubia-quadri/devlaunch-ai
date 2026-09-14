@@ -7,7 +7,7 @@ import { ImportButton } from "@/components/repository/ImportButton";
 import { GitFork, Star, Code2, PackageOpen } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Repositories — DevLaunch AI",
+  title: "Repositories — DevLaunch AI Studio",
   description: "Manage and explore your imported GitHub repositories.",
 };
 
@@ -26,19 +26,25 @@ export default async function RepositoriesPage() {
   const languages = new Set(repos.map((r) => r.language).filter(Boolean)).size;
 
   return (
-    <div className="space-y-6">
-      {/* Page header */}
-      <div className="flex items-center justify-between gap-4 flex-wrap">
+    <div className="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[hsl(var(--foreground))]">
-            Repositories
+          <div className="flex items-center gap-2 font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
+            <span>workspace</span>
+            <span>/</span>
+            <span className="text-[hsl(var(--foreground))]">repositories</span>
+          </div>
+          <h1 className="text-xl sm:text-2xl font-medium tracking-tight text-[hsl(var(--foreground))] mt-0.5">
+            repository catalog
           </h1>
-          <p className="text-sm text-[hsl(var(--muted-foreground))] mt-0.5">
+          <p className="font-mono text-xs text-[hsl(var(--muted-foreground))] mt-0.5">
             {repos.length > 0
-              ? `${repos.length} repositories imported from GitHub`
-              : "Import your GitHub repositories to get started"}
+              ? `${repos.length} repositories indexed from GitHub`
+              : "connect your github account to index your work"}
           </p>
         </div>
+
         <ImportButton hasRepos={repos.length > 0} />
       </div>
 
@@ -46,22 +52,24 @@ export default async function RepositoriesPage() {
       {repos.length > 0 && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: "Total Repos", value: repos.length, icon: Code2, color: "text-violet-400", bg: "bg-violet-500/10" },
-            { label: "Total Stars", value: totalStars, icon: Star, color: "text-amber-400", bg: "bg-amber-500/10" },
-            { label: "Total Forks", value: totalForks, icon: GitFork, color: "text-sky-400", bg: "bg-sky-500/10" },
-            { label: "Languages", value: languages, icon: PackageOpen, color: "text-emerald-400", bg: "bg-emerald-500/10" },
+            { label: "repositories", value: repos.length, icon: Code2 },
+            { label: "total stars", value: totalStars, icon: Star },
+            { label: "total forks", value: totalForks, icon: GitFork },
+            { label: "languages", value: languages, icon: PackageOpen },
           ].map((s) => (
             <div
               key={s.label}
-              className="flex items-center gap-3 p-4 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))]"
+              className="paper-card p-4 space-y-1"
             >
-              <div className={`flex items-center justify-center w-9 h-9 rounded-lg shrink-0 ${s.bg}`}>
-                <s.icon className={`w-4 h-4 ${s.color}`} />
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] uppercase tracking-wider text-[hsl(var(--muted-foreground))]">
+                  {s.label}
+                </span>
+                <s.icon className="w-3.5 h-3.5 text-[hsl(var(--muted-foreground))] opacity-60" />
               </div>
-              <div>
-                <p className="text-xl font-bold text-[hsl(var(--foreground))] leading-none">{s.value}</p>
-                <p className="text-[10px] text-[hsl(var(--muted-foreground))] mt-0.5">{s.label}</p>
-              </div>
+              <p className="font-mono text-2xl font-normal text-[hsl(var(--foreground))] leading-tight pt-1">
+                {s.value}
+              </p>
             </div>
           ))}
         </div>
@@ -69,40 +77,46 @@ export default async function RepositoriesPage() {
 
       {/* Empty state */}
       {repos.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-24 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-[hsl(var(--accent))] flex items-center justify-center mb-4">
-            <Code2 className="w-8 h-8 text-[hsl(var(--muted-foreground))]" />
-          </div>
-          <h2 className="text-lg font-semibold text-[hsl(var(--foreground))]">
-            No repositories yet
-          </h2>
-          <p className="text-sm text-[hsl(var(--muted-foreground))] mt-2 max-w-sm">
-            Click <strong>Import Repos</strong> above to pull in your GitHub repositories.
-            AI insights will be generated after import.
+        <div className="paper-card p-12 text-center space-y-3">
+          <Code2 className="w-8 h-8 text-[hsl(var(--muted-foreground))] mx-auto opacity-50" />
+          <h2 className="text-sm font-medium text-[hsl(var(--foreground))]">no repositories imported</h2>
+          <p className="text-xs text-[hsl(var(--muted-foreground))] max-w-xs mx-auto">
+            click import repositories above to connect your github projects.
           </p>
         </div>
       )}
 
-      {/* Repo grid */}
+      {/* Repositories grid */}
       {repos.length > 0 && (
-        <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
-          {repos.map((repo) => (
-            <RepoCard
-              key={repo.id}
-              id={repo.id}
-              name={repo.name}
-              description={repo.description}
-              language={repo.language}
-              topics={repo.topics as string[]}
-              stars={repo.stars}
-              forks={repo.forks}
-              url={repo.url}
-              pushedAt={repo.pushedAt}
-              isFork={repo.isFork}
-              isArchived={repo.isArchived}
-              hasInsights={repo.developerInsights !== null}
-            />
-          ))}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[hsl(var(--muted-foreground))]">
+              indexed projects
+            </span>
+            <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
+              {repos.length} items
+            </span>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {repos.map((repo) => (
+              <RepoCard
+                key={repo.id}
+                id={repo.id}
+                name={repo.name}
+                description={repo.description}
+                language={repo.language}
+                topics={repo.topics as string[]}
+                stars={repo.stars}
+                forks={repo.forks}
+                url={repo.url}
+                pushedAt={repo.pushedAt}
+                isFork={repo.isFork}
+                isArchived={repo.isArchived}
+                hasInsights={!!repo.developerInsights}
+              />
+            ))}
+          </div>
         </div>
       )}
     </div>
