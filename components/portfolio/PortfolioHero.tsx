@@ -1,3 +1,5 @@
+"use client";
+
 import { Star, GitFork, Code2, MapPin, Globe, Mail } from "lucide-react";
 
 interface PortfolioHeroProps {
