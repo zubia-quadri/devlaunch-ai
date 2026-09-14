@@ -102,20 +102,39 @@ code, pre, kbd, samp {
 
 .paper-grid {
   background-image: 
-    linear-gradient(to right, hsl(var(--border) / 0.45) 1px, transparent 1px),
-    linear-gradient(to bottom, hsl(var(--border) / 0.45) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.16) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.dark .paper-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
 .paper-grid-dense {
   background-image: 
-    linear-gradient(to right, hsl(var(--border) / 0.3) 1px, transparent 1px),
-    linear-gradient(to bottom, hsl(var(--border) / 0.3) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.09) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.dark .paper-grid-dense {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
   background-size: 16px 16px;
 }
 
 .paper-dots {
-  background-image: radial-gradient(hsl(var(--border) / 0.8) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.22) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.dark .paper-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
@@ -229,36 +248,29 @@ code, pre, kbd, samp {
   animation: pulseGlow 3s ease-in-out infinite;
 }
 
-/* ── Glowing Grid Laser Beams ── */
-@keyframes gridBeamX {
-  0% { transform: translateX(-100%); opacity: 0; }
-  20% { opacity: 0.8; }
-  80% { opacity: 0.8; }
-  100% { transform: translateX(200%); opacity: 0; }
+/* ── Glowing Grid Laser Beams & Spaced-Out Moving Objects ── */
+@keyframes shinyGlideH {
+  0% { transform: translateX(-180px); opacity: 0; }
+  8% { opacity: 0.95; }
+  92% { opacity: 0.95; }
+  100% { transform: translateX(calc(100vw + 180px)); opacity: 0; }
 }
 
-@keyframes gridBeamY {
-  0% { transform: translateY(-100%); opacity: 0; }
-  20% { opacity: 0.8; }
-  80% { opacity: 0.8; }
-  100% { transform: translateY(200%); opacity: 0; }
+@keyframes shinyGlideV {
+  0% { transform: translateY(-180px); opacity: 0; }
+  8% { opacity: 0.95; }
+  92% { opacity: 0.95; }
+  100% { transform: translateY(calc(100vh + 180px)); opacity: 0; }
 }
 
-.animate-grid-beam-x {
-  animation: gridBeamX 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
+.shiny-glide-h1 { animation: shinyGlideH 7.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+.shiny-glide-h2 { animation: shinyGlideH 10s cubic-bezier(0.4, 0, 0.2, 1) 3.2s infinite; }
+.shiny-glide-h3 { animation: shinyGlideH 13s cubic-bezier(0.4, 0, 0.2, 1) 5.8s infinite; }
 
-.animate-grid-beam-x-delayed {
-  animation: gridBeamX 9s cubic-bezier(0.4, 0, 0.2, 1) 3.5s infinite;
-}
+.shiny-glide-v1 { animation: shinyGlideV 8.5s cubic-bezier(0.4, 0, 0.2, 1) 1.2s infinite; }
+.shiny-glide-v2 { animation: shinyGlideV 11.5s cubic-bezier(0.4, 0, 0.2, 1) 4.5s infinite; }
+.shiny-glide-v3 { animation: shinyGlideV 14s cubic-bezier(0.4, 0, 0.2, 1) 7.2s infinite; }
 
-.animate-grid-beam-y {
-  animation: gridBeamY 8s cubic-bezier(0.4, 0, 0.2, 1) 1.5s infinite;
-}
-
-.animate-grid-beam-y-delayed {
-  animation: gridBeamY 11s cubic-bezier(0.4, 0, 0.2, 1) 5s infinite;
-}
 
 /* ── Ambient Aurora Shift ── */
 @keyframes auroraDrift {

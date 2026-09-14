@@ -23,120 +23,110 @@ export function CyberGridBackground() {
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden select-none"
       aria-hidden="true"
     >
-      {/* ── 1. Ambient Living Aurora Orbs (Drifting Luminous Glows) ── */}
-      <div className="absolute inset-0 opacity-40 dark:opacity-60 transition-opacity duration-1000">
-        {/* Deep cyan-blue luminescent core */}
-        <div
-          className="absolute -top-[10%] left-[15%] w-[650px] h-[500px] rounded-full blur-[130px] animate-aurora"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(129, 172, 236, 0.28) 0%, rgba(6, 182, 212, 0.15) 50%, transparent 70%)",
-          }}
-        />
-
-        {/* Electric violet ambient edge glow */}
-        <div
-          className="absolute top-[35%] -right-[5%] w-[550px] h-[450px] rounded-full blur-[140px] animate-aurora"
-          style={{
-            animationDelay: "-6s",
-            background:
-              "radial-gradient(circle, rgba(139, 92, 246, 0.22) 0%, rgba(59, 130, 246, 0.12) 50%, transparent 70%)",
-          }}
-        />
-
-        {/* Bottom anchor ambient glow */}
-        <div
-          className="absolute bottom-[-10%] left-[30%] w-[700px] h-[450px] rounded-full blur-[150px] animate-aurora"
-          style={{
-            animationDelay: "-11s",
-            background:
-              "radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, rgba(129, 172, 236, 0.12) 60%, transparent 80%)",
-          }}
-        />
-      </div>
-
-      {/* ── 2. Interactive Spotlight (Reacts to Cursor) ── */}
+      {/* ── 1. Interactive Ambient Cursor Spotlight (Soft Specular Glow) ── */}
       <div
-        className="absolute inset-0 transition-[background] duration-200 ease-out"
+        className="absolute inset-0 transition-[background] duration-200 ease-out opacity-80"
         style={{
-          background: `radial-gradient(650px circle at ${mousePos.x}% ${mousePos.y}%, rgba(129, 172, 236, 0.14), transparent 80%)`,
+          background: `radial-gradient(600px circle at ${mousePos.x}% ${mousePos.y}%, rgba(129, 172, 236, 0.12), transparent 75%)`,
         }}
       />
 
-      {/* ── 3. Base High-Definition Technical Grid (Paper Blueprint) ── */}
-      <div className="absolute inset-0 paper-grid opacity-60 dark:opacity-75" />
-      <div className="absolute inset-0 paper-grid-dense opacity-20 dark:opacity-30" />
+      {/* ── 2. Crisp Architectural Millimeter Grid (Black grid lines in light mode) ── */}
+      <div className="absolute inset-0 paper-grid opacity-85" />
+      <div className="absolute inset-0 paper-grid-dense opacity-35" />
 
-      {/* ── 4. Dynamic Travelling Laser Beams (Horiz & Vert Lines) ── */}
-      {/* Horizontal Beam 1 */}
-      <div
-        className="absolute top-[224px] left-0 w-full h-[1px] overflow-hidden"
-        style={{ pointerEvents: "none" }}
-      >
-        <div
-          className="w-48 h-[2px] -mt-[0.5px] bg-gradient-to-r from-transparent via-[#81ACEC] to-transparent shadow-[0_0_12px_#81ACEC] animate-grid-beam-x"
-        />
+      {/* ── 3. Spaced-Out Shiny Objects Moving Along Horizontal Black Grid Lines ── */}
+      {/* Horizontal Line 1 (y = 128px) */}
+      <div className="absolute top-[128px] left-0 w-full h-[3px] overflow-hidden">
+        {/* Shiny moving object A */}
+        <div className="shiny-glide-h1 w-20 h-[3px] flex items-center justify-center">
+          <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-[#81ACEC] to-transparent shadow-[0_0_8px_#81ACEC,0_0_16px_rgba(129,172,236,0.6)] rounded-full" />
+          <div className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_10px_#81ACEC]" />
+        </div>
       </div>
 
-      {/* Horizontal Beam 2 (Delayed) */}
-      <div
-        className="absolute top-[480px] left-0 w-full h-[1px] overflow-hidden"
-        style={{ pointerEvents: "none" }}
-      >
-        <div
-          className="w-64 h-[2px] -mt-[0.5px] bg-gradient-to-r from-transparent via-[#06b6d4] to-transparent shadow-[0_0_15px_#06b6d4] animate-grid-beam-x-delayed"
-        />
+      {/* Horizontal Line 2 (y = 288px) */}
+      <div className="absolute top-[288px] left-0 w-full h-[3px] overflow-hidden">
+        {/* Shiny moving object B (delayed) */}
+        <div className="shiny-glide-h2 w-28 h-[3px] flex items-center justify-center">
+          <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-[#06b6d4] to-transparent shadow-[0_0_8px_#06b6d4,0_0_16px_rgba(6,182,212,0.6)] rounded-full" />
+          <div className="absolute w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_10px_#06b6d4]" />
+        </div>
       </div>
 
-      {/* Vertical Beam 1 */}
-      <div
-        className="absolute left-[20%] top-0 w-[1px] h-full overflow-hidden"
-        style={{ pointerEvents: "none" }}
-      >
-        <div
-          className="h-44 w-[2px] -ml-[0.5px] bg-gradient-to-b from-transparent via-[#81ACEC] to-transparent shadow-[0_0_12px_#81ACEC] animate-grid-beam-y"
-        />
+      {/* Horizontal Line 3 (y = 512px) */}
+      <div className="absolute top-[512px] left-0 w-full h-[3px] overflow-hidden">
+        {/* Shiny moving object C */}
+        <div className="shiny-glide-h3 w-24 h-[3px] flex items-center justify-center">
+          <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-[#81ACEC] to-transparent shadow-[0_0_8px_#81ACEC,0_0_16px_rgba(129,172,236,0.6)] rounded-full" />
+          <div className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_8px_#81ACEC]" />
+        </div>
       </div>
 
-      {/* Vertical Beam 2 (Delayed) */}
-      <div
-        className="absolute right-[25%] top-0 w-[1px] h-full overflow-hidden"
-        style={{ pointerEvents: "none" }}
-      >
-        <div
-          className="h-56 w-[2px] -ml-[0.5px] bg-gradient-to-b from-transparent via-[#a78bfa] to-transparent shadow-[0_0_14px_#a78bfa] animate-grid-beam-y-delayed"
-        />
+      {/* Horizontal Line 4 (y = 736px) */}
+      <div className="absolute top-[736px] left-0 w-full h-[3px] overflow-hidden">
+        {/* Shiny moving object D */}
+        <div className="shiny-glide-h1 w-32 h-[3px] flex items-center justify-center" style={{ animationDelay: "4.5s" }}>
+          <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-[#a78bfa] to-transparent shadow-[0_0_8px_#a78bfa,0_0_16px_rgba(167,139,250,0.6)] rounded-full" />
+          <div className="absolute w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_10px_#a78bfa]" />
+        </div>
       </div>
 
-      {/* ── 5. Luminous Technical Crosshairs (+) at Grid Intersections ── */}
-      <div className="absolute top-16 left-12 font-mono text-[11px] text-[#81ACEC] opacity-60 dark:opacity-80 animate-pulse">
+      {/* ── 4. Spaced-Out Shiny Objects Moving Along Vertical Black Grid Lines ── */}
+      {/* Vertical Line 1 (x = 18%) */}
+      <div className="absolute left-[18%] top-0 w-[3px] h-full overflow-hidden">
+        <div className="shiny-glide-v1 h-20 w-[3px] flex flex-col items-center justify-center">
+          <div className="h-full w-[2px] bg-gradient-to-b from-transparent via-[#81ACEC] to-transparent shadow-[0_0_8px_#81ACEC,0_0_16px_rgba(129,172,236,0.6)] rounded-full" />
+          <div className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_10px_#81ACEC]" />
+        </div>
+      </div>
+
+      {/* Vertical Line 2 (x = 48%) */}
+      <div className="absolute left-[48%] top-0 w-[3px] h-full overflow-hidden">
+        <div className="shiny-glide-v2 h-28 w-[3px] flex flex-col items-center justify-center">
+          <div className="h-full w-[2px] bg-gradient-to-b from-transparent via-[#06b6d4] to-transparent shadow-[0_0_8px_#06b6d4,0_0_16px_rgba(6,182,212,0.6)] rounded-full" />
+          <div className="absolute w-2.5 h-2.5 rounded-full bg-white shadow-[0_0_10px_#06b6d4]" />
+        </div>
+      </div>
+
+      {/* Vertical Line 3 (x = 82%) */}
+      <div className="absolute left-[82%] top-0 w-[3px] h-full overflow-hidden">
+        <div className="shiny-glide-v3 h-24 w-[3px] flex flex-col items-center justify-center">
+          <div className="h-full w-[2px] bg-gradient-to-b from-transparent via-[#81ACEC] to-transparent shadow-[0_0_8px_#81ACEC,0_0_16px_rgba(129,172,236,0.6)] rounded-full" />
+          <div className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_10px_#81ACEC]" />
+        </div>
+      </div>
+
+      {/* ── 5. Technical Intersection Crosshairs (+) along Grid Junctions ── */}
+      <div className="absolute top-[128px] left-[18%] font-mono text-[10px] text-neutral-800 dark:text-neutral-300 font-bold -translate-x-1/2 -translate-y-1/2 opacity-75">
         +
       </div>
-      <div className="absolute top-16 right-16 font-mono text-[11px] text-[#81ACEC] opacity-60 dark:opacity-80 animate-pulse" style={{ animationDelay: "1s" }}>
+      <div className="absolute top-[128px] left-[48%] font-mono text-[10px] text-[#81ACEC] font-bold -translate-x-1/2 -translate-y-1/2 animate-pulse shadow-xs">
         +
       </div>
-      <div className="absolute top-[416px] left-[35%] font-mono text-[11px] text-[#06b6d4] opacity-50 dark:opacity-80 animate-pulse" style={{ animationDelay: "2s" }}>
+      <div className="absolute top-[128px] left-[82%] font-mono text-[10px] text-neutral-800 dark:text-neutral-300 font-bold -translate-x-1/2 -translate-y-1/2 opacity-75">
         +
       </div>
-      <div className="absolute top-[640px] right-[20%] font-mono text-[11px] text-[#81ACEC] opacity-60 dark:opacity-80 animate-pulse" style={{ animationDelay: "1.5s" }}>
+      <div className="absolute top-[288px] left-[18%] font-mono text-[10px] text-[#06b6d4] font-bold -translate-x-1/2 -translate-y-1/2 animate-pulse" style={{ animationDelay: "1.2s" }}>
+        +
+      </div>
+      <div className="absolute top-[288px] left-[48%] font-mono text-[10px] text-neutral-800 dark:text-neutral-300 font-bold -translate-x-1/2 -translate-y-1/2 opacity-75">
+        +
+      </div>
+      <div className="absolute top-[512px] left-[82%] font-mono text-[10px] text-[#81ACEC] font-bold -translate-x-1/2 -translate-y-1/2 animate-pulse" style={{ animationDelay: "2s" }}>
         +
       </div>
 
-      {/* Technical HUD Coordinate readouts */}
-      <div className="absolute top-4 left-6 font-mono text-[9px] tracking-widest text-[hsl(var(--muted-foreground)/0.5)]">
-        SYS.GRID // 32PX [ONLINE]
+      {/* ── 6. Subtle Technical Corner Telemetry ── */}
+      <div className="absolute top-4 left-6 font-mono text-[9px] tracking-widest text-[hsl(var(--muted-foreground)/0.55)]">
+        GRID.TRACK // 32PX [BLACK-INK]
       </div>
-      <div className="absolute top-4 right-6 font-mono text-[9px] tracking-widest text-[hsl(var(--muted-foreground)/0.5)]">
-        QUANTUM.INDEX // v2.4
+      <div className="absolute top-4 right-6 font-mono text-[9px] tracking-widest text-[hsl(var(--muted-foreground)/0.55)]">
+        OBJECT.CADENCE // 60FPS
       </div>
-      <div className="absolute bottom-4 left-6 font-mono text-[9px] tracking-widest text-[hsl(var(--muted-foreground)/0.5)]">
-        AXIS.X: {mousePos.x}% · AXIS.Y: {mousePos.y}%
+      <div className="absolute bottom-4 left-6 font-mono text-[9px] tracking-widest text-[hsl(var(--muted-foreground)/0.55)]">
+        POS: [{mousePos.x}%, {mousePos.y}%]
       </div>
-
-      {/* Soft Vignette Mask to softly focus center content */}
-      <div
-        className="absolute inset-0 bg-radial from-transparent via-transparent to-[hsl(var(--background)/0.7)] pointer-events-none"
-      />
     </div>
   );
 }

@@ -41,29 +41,35 @@ export default async function SettingsPage() {
   const portfolioUsername = portfolio?.username ?? user.githubUsername ?? userId;
 
   return (
-    <div className="p-4 sm:p-8 space-y-6 max-w-3xl mx-auto w-full">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
+    <div className="p-4 sm:p-8 space-y-7 max-w-4xl mx-auto w-full">
+      {/* ── 3D Futuristic HUD Header ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.65)] backdrop-blur-md shadow-lg relative overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-72 h-20 bg-[#81ACEC]/15 blur-3xl pointer-events-none" />
+
+        <div className="space-y-1 relative z-10">
           <div className="flex items-center gap-2 font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
-            <span>workspace</span>
-            <span>/</span>
-            <span className="text-[hsl(var(--foreground))]">settings</span>
+            <span className="inline-flex items-center gap-1 text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/25">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              USER.CONFIG // SECURE
+            </span>
+            <span>//</span>
+            <span className="text-[hsl(var(--foreground))]">PREFERENCES</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-medium tracking-tight text-[hsl(var(--foreground))] mt-0.5">
+          <h1 className="text-xl sm:text-2xl font-normal tracking-tight text-[hsl(var(--foreground))] pt-0.5">
             profile &amp; portfolio settings
           </h1>
-          <p className="font-mono text-xs text-[hsl(var(--muted-foreground))] mt-0.5">
-            configure your resume contact info, bio, and live showcase
+          <p className="font-mono text-xs text-[hsl(var(--muted-foreground))]">
+            manage your resume contact info, career highlights, and live portfolio showcase
           </p>
         </div>
+
         {portfolio?.isPublic && (
           <Link
             href={`/${portfolioUsername}`}
             target="_blank"
-            className="paper-btn-secondary text-xs py-1.5 px-3 rounded-lg self-start sm:self-auto"
+            className="paper-btn-secondary text-xs py-2 px-3.5 rounded-xl hover:border-[#81ACEC] transition-all flex items-center gap-1.5 self-start sm:self-auto shadow-xs relative z-10"
           >
-            <ExternalLink className="w-3.5 h-3.5 opacity-60" />
+            <ExternalLink className="w-3.5 h-3.5 text-[#81ACEC]" />
             <span>view live portfolio</span>
           </Link>
         )}

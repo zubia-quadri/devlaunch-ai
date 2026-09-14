@@ -139,26 +139,36 @@ export default function ResumePage() {
   }
 
   return (
-    <div className="flex-1 p-4 md:p-8 max-w-5xl mx-auto w-full relative">
+    <div className="flex-1 p-4 md:p-8 max-w-5xl mx-auto w-full relative space-y-7">
 
-      {/* Breadcrumb & Header */}
-      <div className="mb-6 space-y-1">
-        <div className="flex items-center gap-2 font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
-          <span>workspace</span>
-          <span>/</span>
-          <span className="text-[hsl(var(--foreground))]">resume-builder</span>
-          <span className="paper-tag-blue px-1.5 py-0.2 ml-1 text-[9px]">studio draft</span>
+      {/* ── 3D Futuristic HUD Header ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.65)] backdrop-blur-md shadow-lg relative overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-72 h-20 bg-[#81ACEC]/15 blur-3xl pointer-events-none" />
+
+        <div className="space-y-1 relative z-10">
+          <div className="flex items-center gap-2 font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
+            <span className="inline-flex items-center gap-1 text-[#81ACEC] bg-[#81ACEC]/10 px-2 py-0.5 rounded-full border border-[#81ACEC]/25 shadow-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#81ACEC] animate-pulse" />
+              RESUME.SYNTHESIS // ACTIVE
+            </span>
+            <span>//</span>
+            <span className="text-[hsl(var(--foreground))]">ATS.COMPLIANT</span>
+          </div>
+          <h1 className="text-xl md:text-2xl font-normal tracking-tight text-[hsl(var(--foreground))] pt-0.5">
+            ai resume drafting studio
+          </h1>
+          <p className="font-mono text-xs text-[hsl(var(--muted-foreground))] flex items-center gap-2">
+            <span>paste target job description</span>
+            <span>·</span>
+            <span className="text-[#81ACEC] font-semibold">semantic repo matching</span>
+            <span>·</span>
+            <span>instant pdf export</span>
+          </p>
         </div>
-        <h1 className="text-xl md:text-2xl font-medium tracking-tight text-[hsl(var(--foreground))]">
-          resume drafting canvas
-        </h1>
-        <p className="text-xs text-[hsl(var(--muted-foreground))]">
-          paste any target job description to match repositories, compile bullets, and export an ats-optimized pdf.
-        </p>
       </div>
 
-      {/* Steps Pill Indicator */}
-      <div className="flex items-center gap-2 mb-6 border-b border-[hsl(var(--border))] pb-3">
+      {/* Steps Pill Indicator in 3D */}
+      <div className="flex items-center gap-2 border-b border-[hsl(var(--border))] pb-4">
         {[
           { id: 'input', num: '01', label: 'job specification' },
           { id: 'loading', num: '02', label: 'semantic analysis' },
@@ -169,12 +179,12 @@ export default function ResumePage() {
           return (
             <div
               key={s.id}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono transition-colors ${
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono transition-all duration-200 ${
                 isCurrent
-                  ? 'bg-[hsl(var(--foreground))] text-[hsl(var(--background))]'
+                  ? 'bg-[#81ACEC] text-slate-950 font-bold shadow-[0_0_15px_rgba(129,172,236,0.4)]'
                   : isPassed
-                  ? 'text-[hsl(var(--foreground))]'
-                  : 'text-[hsl(var(--muted-foreground)/0.6)]'
+                  ? 'border border-[hsl(var(--border))] bg-[hsl(var(--card))] text-[hsl(var(--foreground))]'
+                  : 'border border-[hsl(var(--border)/0.5)] text-[hsl(var(--muted-foreground)/0.5)]'
               }`}
             >
               <span>[{s.num}]</span>
@@ -187,84 +197,88 @@ export default function ResumePage() {
       {/* STEP 1: INPUT */}
       {step === 'input' && (
         <div className="space-y-6 animate-fade-in-up">
-          <div className="paper-card overflow-hidden">
+          <div className="card-3d overflow-hidden p-6 space-y-5">
             {/* Header */}
-            <div className="px-5 py-3 border-b border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.3)] flex items-center justify-between">
+            <div className="flex items-center justify-between border-b border-[hsl(var(--border)/0.5)] pb-3">
               <div className="flex items-center gap-2">
-                <FileText className="w-3.5 h-3.5 text-[#81ACEC]" />
-                <span className="text-xs font-semibold text-[hsl(var(--foreground))]">role specification</span>
+                <FileText className="w-4 h-4 text-[#81ACEC]" />
+                <span className="text-xs font-semibold uppercase tracking-wider text-[hsl(var(--foreground))]">
+                  target role specification
+                </span>
               </div>
-              <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">gemini 3.6 engine</span>
+              <span className="font-mono text-[9px] px-2 py-0.5 rounded-full bg-[#81ACEC]/10 text-[#81ACEC] border border-[#81ACEC]/20">
+                GEMINI 3.6 PRO MATRIX
+              </span>
             </div>
 
-            <div className="p-5 space-y-4">
+            <div className="space-y-4">
               {/* Optional Job Title & Company */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="space-y-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
                   <label className="font-mono text-[10px] uppercase text-[hsl(var(--muted-foreground))]">
                     target job title <span className="normal-case opacity-60">(optional)</span>
                   </label>
                   <div className="relative">
-                    <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[hsl(var(--muted-foreground))]" />
+                    <Briefcase className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[hsl(var(--muted-foreground))]" />
                     <input
                       value={jobTitle}
                       onChange={e => setJobTitle(e.target.value)}
                       placeholder="e.g. Senior Full Stack Engineer"
-                      className="w-full pl-9 pr-3 py-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-xs text-[hsl(var(--foreground))] outline-none focus:border-[#81ACEC] transition-colors"
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-xs text-[hsl(var(--foreground))] outline-none focus:border-[#81ACEC] focus:shadow-[0_0_12px_rgba(129,172,236,0.25)] transition-all"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   <label className="font-mono text-[10px] uppercase text-[hsl(var(--muted-foreground))]">
                     company name <span className="normal-case opacity-60">(optional)</span>
                   </label>
                   <div className="relative">
-                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[hsl(var(--muted-foreground))]" />
+                    <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[hsl(var(--muted-foreground))]" />
                     <input
                       value={companyName}
                       onChange={e => setCompanyName(e.target.value)}
                       placeholder="e.g. Google"
-                      className="w-full pl-9 pr-3 py-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-xs text-[hsl(var(--foreground))] outline-none focus:border-[#81ACEC] transition-colors"
+                      className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-xs text-[hsl(var(--foreground))] outline-none focus:border-[#81ACEC] focus:shadow-[0_0_12px_rgba(129,172,236,0.25)] transition-all"
                     />
                   </div>
                 </div>
               </div>
 
               {/* JD Textarea */}
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
                   <label className="font-mono text-[10px] uppercase text-[hsl(var(--muted-foreground))]">
                     job description <span className="text-rose-500">*</span>
                   </label>
                   <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
-                    {jdText.length} characters {jdText.length > 0 && jdText.length < 50 ? '(min 50)' : ''}
+                    {jdText.length} chars {jdText.length > 0 && jdText.length < 50 ? '(min 50 required)' : ''}
                   </span>
                 </div>
                 <textarea
                   value={jdText}
                   onChange={e => setJdText(e.target.value)}
-                  placeholder="Paste the full job description from LinkedIn, Indeed, Naukri, or direct listing...&#10;&#10;DevLaunch AI will extract core competencies and pinpoint the 2–3 repositories that prove your qualifications."
+                  placeholder="Paste the complete job description from LinkedIn, Indeed, Naukri, or employer website...&#10;&#10;DevLaunch AI will extract role competencies, identify tech requirements, and select your top 2–3 repositories to build a tailored ATS resume."
                   rows={9}
-                  className="w-full p-3 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-xs leading-relaxed text-[hsl(var(--foreground))] outline-none focus:border-[#81ACEC] transition-colors resize-none font-mono"
+                  className="w-full p-3.5 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-xs leading-relaxed text-[hsl(var(--foreground))] outline-none focus:border-[#81ACEC] focus:shadow-[0_0_15px_rgba(129,172,236,0.2)] transition-all resize-none font-mono"
                 />
               </div>
             </div>
 
             {/* Card Footer */}
-            <div className="px-5 py-3 border-t border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.2)] flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-[hsl(var(--border)/0.4)]">
               {error ? (
                 <p className="text-xs text-rose-500 font-mono">error: {error}</p>
               ) : (
                 <p className="text-[11px] text-[hsl(var(--muted-foreground))] font-mono">
-                  ai scans your repositories to highlight your best work
+                  ai scans your repositories to match the best projects
                 </p>
               )}
 
               <button
                 onClick={handleGenerate}
                 disabled={jdText.trim().length < 50}
-                className="paper-btn-primary text-xs py-2 px-4 rounded-lg w-full sm:w-auto shadow-xs disabled:opacity-40 disabled:cursor-not-allowed"
+                className="paper-btn-primary text-xs py-2.5 px-5 rounded-xl w-full sm:w-auto shadow-sm hover:shadow-[0_0_20px_rgba(129,172,236,0.35)] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
               >
                 <span>compile tailored resume</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -276,26 +290,30 @@ export default function ResumePage() {
 
       {/* STEP 2: LOADING */}
       {step === 'loading' && (
-        <div className="paper-card p-12 text-center space-y-6 animate-fade-in-up">
-          <div className="w-10 h-10 rounded-lg bg-[#81ACEC] mx-auto flex items-center justify-center animate-pulse">
-            <div className="w-4 h-4 bg-[hsl(var(--background))] rounded-xs" />
+        <div className="card-3d p-14 text-center space-y-6 animate-fade-in-up">
+          <div className="relative w-16 h-16 mx-auto">
+            <div className="absolute inset-0 rounded-full border-2 border-[#81ACEC]/20 animate-ping" />
+            <div className="absolute inset-0 rounded-full border-2 border-t-[#81ACEC] animate-spin" />
+            <div className="absolute inset-2 rounded-xl bg-[#81ACEC] flex items-center justify-center shadow-[0_0_20px_#81ACEC]">
+              <Sparkles className="w-5 h-5 text-slate-950 animate-pulse" />
+            </div>
           </div>
 
           <div className="space-y-1.5 max-w-sm mx-auto">
-            <p className="text-sm font-medium text-[hsl(var(--foreground))]">{loadingMsg}</p>
+            <p className="text-sm font-semibold text-[hsl(var(--foreground))]">{loadingMsg}</p>
             <p className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
-              analyzing role requirements across your github profile
+              quantum matching engine active across your code index
             </p>
           </div>
 
           <div className="max-w-xs mx-auto space-y-2">
-            <div className="h-1 w-full bg-[hsl(var(--border))] rounded-full overflow-hidden">
+            <div className="h-1.5 w-full bg-[hsl(var(--muted))] rounded-full overflow-hidden">
               <div
-                className="h-full bg-[#81ACEC] transition-all duration-300 ease-out"
+                className="h-full bg-gradient-to-r from-[#81ACEC] to-emerald-400 transition-all duration-300 ease-out shadow-[0_0_8px_#81ACEC]"
                 style={{ width: `${loadingProgress}%` }}
               />
             </div>
-            <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">{loadingProgress}%</span>
+            <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">{loadingProgress}% completed</span>
           </div>
         </div>
       )}
@@ -304,10 +322,10 @@ export default function ResumePage() {
       {step === 'result' && result && userInfo && (
         <div className="space-y-6 animate-fade-in-up">
           {/* Action Header */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))]">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.7)] backdrop-blur-md shadow-lg">
             <div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
                 <span className="text-xs font-semibold text-[hsl(var(--foreground))]">
                   tailored for {jobTitle || 'selected role'} {companyName ? `at ${companyName}` : ''}
                 </span>
@@ -320,7 +338,7 @@ export default function ResumePage() {
             <div className="flex items-center gap-2 w-full sm:w-auto">
               <button
                 onClick={() => { setStep('input'); setResult(null); setError(''); }}
-                className="paper-btn-secondary text-xs py-1.5 px-3 rounded-lg"
+                className="paper-btn-secondary text-xs py-2 px-3.5 rounded-xl hover:border-[#81ACEC] transition-colors flex items-center gap-1.5"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>new draft</span>
@@ -328,7 +346,7 @@ export default function ResumePage() {
 
               <button
                 onClick={handleCopyText}
-                className="paper-btn-secondary text-xs py-1.5 px-3 rounded-lg"
+                className="paper-btn-secondary text-xs py-2 px-3.5 rounded-xl hover:border-[#81ACEC] transition-colors flex items-center gap-1.5"
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'copied' : 'copy'}</span>
@@ -336,7 +354,7 @@ export default function ResumePage() {
 
               <button
                 onClick={handleDownloadPDF}
-                className="paper-btn-primary text-xs py-1.5 px-4 rounded-lg shadow-xs"
+                className="paper-btn-primary text-xs py-2 px-4 rounded-xl shadow-xs hover:shadow-[0_0_20px_rgba(129,172,236,0.35)] transition-all flex items-center gap-1.5"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>download pdf</span>
@@ -344,15 +362,20 @@ export default function ResumePage() {
             </div>
           </div>
 
-          {/* Matched Project Chips */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {/* Matched Project Chips in 3D */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
             {result.selectedProjects.map((p, i) => (
-              <div key={p.name} className="p-3 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] space-y-1">
+              <div
+                key={p.name}
+                className="card-3d p-4 space-y-2 group hover:-translate-y-1 hover:border-[#81ACEC]/50 hover:shadow-[0_0_15px_rgba(129,172,236,0.2)] transition-all duration-200"
+              >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-[#4a77bf] dark:text-[#9ec2f7]">#0{i + 1} project</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span className="font-mono text-[10px] text-[#81ACEC] font-semibold">#0{i + 1} MATCH</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]" />
                 </div>
-                <p className="text-xs font-semibold text-[hsl(var(--foreground))] truncate">{p.name}</p>
+                <p className="text-xs font-semibold text-[hsl(var(--foreground))] group-hover:text-[#81ACEC] transition-colors truncate">
+                  {p.name}
+                </p>
                 <p className="text-[11px] text-[hsl(var(--muted-foreground))] line-clamp-2 leading-relaxed">
                   {p.relevanceReason}
                 </p>
@@ -360,8 +383,8 @@ export default function ResumePage() {
             ))}
           </div>
 
-          {/* The Physical Paper Drafting Sheet */}
-          <div className="p-4 sm:p-8 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.3)] paper-grid flex justify-center">
+          {/* The Physical Paper Drafting Sheet inside 3D elevated frame */}
+          <div className="p-4 sm:p-8 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.5)] paper-grid flex justify-center shadow-xl">
             <div
               ref={resumeRef}
               className="paper-sheet w-full max-w-2xl px-10 py-10 rounded-sm font-serif text-neutral-900 shadow-md relative"
