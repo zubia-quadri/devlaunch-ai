@@ -98,9 +98,31 @@ Respond ONLY with valid JSON in this exact format:
   "skills": ["skill1", "skill2", "skill3", "skill4", "skill5", "skill6", "skill7", "skill8"]
 }`;
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
+    const CANDIDATE_MODELS = ['gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-3.8-flash'];
+    let text = '';
+    let lastErr: unknown = null;
+
+    for (const mName of CANDIDATE_MODELS) {
+      try {
+        const model = genAI.getGenerativeModel({
+          model: mName,
+          generationConfig: {
+            maxOutputTokens: 4096,
+            temperature: 0.4,
+          },
+        });
+        const result = await model.generateContent(prompt);
+        text = result.response.text();
+        if (text && text.trim()) break;
+      } catch (e) {
+        lastErr = e;
+        console.warn(`[resume/match] Model ${mName} failed, trying fallback...`, e);
+      }
+    }
+
+    if (!text) {
+      throw lastErr || new Error('All candidate models failed');
+    }
 
     // Extract JSON from response
     const jsonMatch = text.match(/\{[\s\S]*\}/);

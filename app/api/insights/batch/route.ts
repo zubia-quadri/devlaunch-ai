@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { generateRepoInsights } from "@/lib/gemini";
 import { rateLimit } from "@/lib/rateLimit";
 
-// Generates insights for ALL repos that don't have them yet (batch mode)
+// Generates insights for repos that are missing, errored, or stuck analyzing
 export async function POST() {
   try {
     const session = await auth();
@@ -12,8 +12,8 @@ export async function POST() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Rate limit: 2 batch runs per 5 minutes per user
-    const rl = rateLimit(session.user.id, "batch", 2, 5 * 60_000);
+    // Rate limit: 5 batch runs per 5 minutes per user
+    const rl = rateLimit(session.user.id, "batch", 5, 5 * 60_000);
     if (!rl.allowed) {
       return NextResponse.json(
         { error: "Batch analysis is rate limited. Please wait a few minutes before trying again." },
@@ -23,14 +23,18 @@ export async function POST() {
 
     const userId = session.user.id;
 
-    // Find repos missing insights
+    // Find repos with no insights OR with ERROR/ANALYZING (stuck/failed) status
     const repos = await prisma.repository.findMany({
       where: {
         userId,
-        developerInsights: null,
-        isFork: false, // Skip forks — not the user's original work
+        isFork: false,
+        OR: [
+          { developerInsights: null },
+          { developerInsights: { status: { in: ["ERROR", "ANALYZING"] } } },
+        ],
       },
-      take: 10, // Process max 10 at a time to avoid long response times
+      include: { developerInsights: { select: { id: true, status: true } } },
+      take: 10,
     });
 
     if (repos.length === 0) {
@@ -42,7 +46,7 @@ export async function POST() {
 
     for (const repo of repos) {
       try {
-        // Mark analyzing
+        // Mark as analyzing (upsert handles both new and retry cases)
         await prisma.developerInsights.upsert({
           where: { repositoryId: repo.id },
           create: { repositoryId: repo.id, status: "ANALYZING" },
@@ -82,6 +86,11 @@ export async function POST() {
         }
       } catch (err) {
         console.error(`[Insights Batch] Failed for repo ${repo.name}:`, err);
+        await prisma.developerInsights.upsert({
+          where: { repositoryId: repo.id },
+          create: { repositoryId: repo.id, status: "ERROR" },
+          update: { status: "ERROR" },
+        });
         failed++;
       }
     }

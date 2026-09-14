@@ -2,17 +2,13 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
-// Use Flash for speed and cost-efficiency
-export const geminiModel = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
-  generationConfig: {
-    temperature: 0.4,
-    topK: 32,
-    topP: 0.9,
-    maxOutputTokens: 1024,
-    responseMimeType: "application/json",
-  },
-});
+// Fallback models in priority order to handle transient 503s or capacity spikes
+const CANDIDATE_MODELS = [
+  "gemini-3.6-flash",
+  "gemini-3.5-flash",
+  "gemini-3.5-flash-lite",
+  "gemini-3.8-flash",
+];
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -108,6 +104,51 @@ Return ONLY valid JSON matching this exact schema (no markdown, no extra text):
 Provide 3-5 items for strongestTechnologies, 3-5 categories, 2-4 trends, and 3-4 learning suggestions.`;
 }
 
+// ─── Helper function to generate with model fallback ─────────────────────────
+
+async function generateWithFallback(prompt: string): Promise<string> {
+  let lastError: unknown = null;
+
+  for (const modelName of CANDIDATE_MODELS) {
+    try {
+      const model = genAI.getGenerativeModel({
+        model: modelName,
+        generationConfig: {
+          temperature: 0.4,
+          topK: 32,
+          topP: 0.9,
+          maxOutputTokens: 4096,
+          responseMimeType: "application/json",
+        },
+      });
+
+      const result = await model.generateContent(prompt);
+      const text = result.response.text();
+      if (text && text.trim()) {
+        return text;
+      }
+    } catch (err) {
+      lastError = err;
+      console.warn(`[Gemini] Model ${modelName} failed, trying next candidate:`, err instanceof Error ? err.message : err);
+    }
+  }
+
+  throw lastError ?? new Error("All Gemini models failed");
+}
+
+function cleanJsonText(raw: string): string {
+  let text = raw.trim();
+  if (text.startsWith("```json")) {
+    text = text.slice(7);
+  } else if (text.startsWith("```")) {
+    text = text.slice(3);
+  }
+  if (text.endsWith("```")) {
+    text = text.slice(0, -3);
+  }
+  return text.trim();
+}
+
 // ─── Generator functions ──────────────────────────────────────────────────────
 
 /**
@@ -119,9 +160,9 @@ export async function generateRepoInsights(
 ): Promise<RepoInsightsV1 | null> {
   try {
     const prompt = buildRepoInsightsPrompt(repo);
-    const result = await geminiModel.generateContent(prompt);
-    const text = result.response.text();
-    return JSON.parse(text) as RepoInsightsV1;
+    const text = await generateWithFallback(prompt);
+    const cleaned = cleanJsonText(text);
+    return JSON.parse(cleaned) as RepoInsightsV1;
   } catch (error) {
     console.error("[Gemini] generateRepoInsights failed:", error);
     return null;
@@ -137,9 +178,9 @@ export async function generateAggregateInsights(
 ): Promise<AggregateInsights | null> {
   try {
     const prompt = buildAggregateInsightsPrompt(repos);
-    const result = await geminiModel.generateContent(prompt);
-    const text = result.response.text();
-    return JSON.parse(text) as AggregateInsights;
+    const text = await generateWithFallback(prompt);
+    const cleaned = cleanJsonText(text);
+    return JSON.parse(cleaned) as AggregateInsights;
   } catch (error) {
     console.error("[Gemini] generateAggregateInsights failed:", error);
     return null;
