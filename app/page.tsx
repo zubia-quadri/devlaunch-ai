@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, Check, Sparkles, FileText, Download, GitFork, ArrowUpRight, Terminal } from "lucide-react";
+import { ArrowRight, Check, Sparkles, FileText, Download, GitFork, ArrowUpRight, Terminal, Zap } from "lucide-react";
 import type { Metadata } from "next";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { CyberGridBackground } from "@/components/ui/CyberGridBackground";
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -26,8 +27,8 @@ export const metadata: Metadata = {
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[hsl(var(--background))] text-[hsl(var(--foreground))] relative overflow-x-hidden">
-      {/* Blueprint millimeter grid backdrop */}
-      <div className="absolute inset-0 paper-grid opacity-75 pointer-events-none" />
+      {/* Dynamic Moving & Shining Cybernetic Grid Background */}
+      <CyberGridBackground />
 
       {/* Floating Paper Island Navbar */}
       <header className="sticky top-4 z-50 max-w-5xl mx-auto px-4">
@@ -63,11 +64,27 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <main className="relative max-w-5xl mx-auto px-6 pt-16 pb-24 sm:pt-24 sm:pb-32">
+        {/* Floating Lively Badges around Hero */}
+        <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-[hsl(var(--card)/0.9)] backdrop-blur-md shadow-lg font-mono text-[11px] text-emerald-500 absolute left-2 top-28 animate-float select-none">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+          <span>ATS MATCH: 98%</span>
+        </div>
+
+        <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#81ACEC]/35 bg-[hsl(var(--card)/0.9)] backdrop-blur-md shadow-lg font-mono text-[11px] text-[#81ACEC] absolute right-2 top-36 animate-float-delayed select-none">
+          <Sparkles className="w-3.5 h-3.5 text-[#81ACEC]" />
+          <span>GEMINI 2.5 FLASH</span>
+        </div>
+
+        <div className="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-violet-500/35 bg-[hsl(var(--card)/0.9)] backdrop-blur-md shadow-lg font-mono text-[11px] text-violet-400 absolute left-6 bottom-40 animate-float select-none">
+          <Terminal className="w-3.5 h-3.5 text-violet-400" />
+          <span>3 REPOS SELECTED</span>
+        </div>
+
         {/* Technical Status Pill */}
         <div className="flex justify-center mb-6">
-          <div className="paper-tag paper-tag-blue">
+          <div className="paper-tag paper-tag-blue shadow-[0_0_12px_rgba(129,172,236,0.2)]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#81ACEC] animate-pulse" />
-            <span>paper.design studio edition v2.4</span>
+            <span>paper studio edition v2.4 // cyber-grid active</span>
           </div>
         </div>
 
@@ -89,7 +106,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
             <Link
               href="/login"
-              className="paper-btn-primary w-full sm:w-auto text-xs py-2.5 px-5 rounded-lg shadow-sm"
+              className="paper-btn-primary w-full sm:w-auto text-xs py-2.5 px-5 rounded-lg shadow-sm hover:shadow-[0_0_20px_rgba(129,172,236,0.3)] transition-all"
             >
               <span>build my resume free</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -97,7 +114,7 @@ export default function LandingPage() {
 
             <Link
               href="#preview"
-              className="paper-btn-secondary w-full sm:w-auto text-xs py-2.5 px-4 rounded-lg"
+              className="paper-btn-secondary w-full sm:w-auto text-xs py-2.5 px-4 rounded-lg hover:border-[#81ACEC] transition-colors"
             >
               <span>explore drafting canvas</span>
               <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />
@@ -106,18 +123,23 @@ export default function LandingPage() {
         </div>
 
         {/* Studio Canvas Preview Mockup */}
-        <section id="preview" className="mt-16 sm:mt-20">
-          <div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] overflow-hidden shadow-lg">
+        <section id="preview" className="mt-16 sm:mt-20 perspective-1200">
+          <div className="rounded-2xl border border-[#81ACEC]/30 bg-[hsl(var(--card))] overflow-hidden shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5),0_0_30px_-5px_rgba(129,172,236,0.2)] relative transition-all duration-300 hover:border-[#81ACEC]/60 hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7),0_0_40px_-5px_rgba(129,172,236,0.35)]">
+            {/* Animated glowing perimeter laser sweep */}
+            <div className="absolute -top-[1px] left-0 w-full h-[2px] overflow-hidden pointer-events-none">
+              <div className="w-1/3 h-full bg-gradient-to-r from-transparent via-[#81ACEC] to-transparent animate-grid-beam-x" />
+            </div>
+
             {/* Top Chrome Window Bar */}
             <div className="flex items-center justify-between px-4 py-2.5 border-b border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.4)]">
               <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--border))]" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--border))]" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--border))]" />
+                <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
                 <span className="ml-2 font-mono text-[11px] text-[hsl(var(--muted-foreground))]">workspace / resume-builder</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="paper-tag text-[10px]">ats match: 94%</span>
+                <span className="paper-tag paper-tag-blue text-[10px]">ats match: 94%</span>
               </div>
             </div>
 
@@ -216,7 +238,7 @@ export default function LandingPage() {
         <section id="how-it-works" className="mt-24 pt-12 border-t border-[hsl(var(--border))]">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-[hsl(var(--muted-foreground))]">system overview</p>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-[#81ACEC]">system overview</p>
               <h2 className="text-xl font-medium tracking-tight text-[hsl(var(--foreground))] mt-1">
                 how the paper compiler works
               </h2>
@@ -244,13 +266,13 @@ export default function LandingPage() {
             ].map((f) => (
               <div
                 key={f.step}
-                className="p-5 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] space-y-2 hover:border-[hsl(var(--foreground)/0.3)] transition-colors"
+                className="card-3d p-6 space-y-2 hover:-translate-y-1.5 transition-all duration-200 group"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-[#4a77bf] dark:text-[#9ec2f7]">{f.step}</span>
-                  <div className="w-1.5 h-1.5 rounded-full bg-[hsl(var(--border))]" />
+                  <span className="font-mono text-xs text-[#81ACEC] font-semibold">{f.step}</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#81ACEC]/50 group-hover:bg-[#81ACEC] group-hover:shadow-[0_0_8px_#81ACEC] transition-colors" />
                 </div>
-                <h3 className="text-sm font-semibold text-[hsl(var(--foreground))]">{f.title}</h3>
+                <h3 className="text-sm font-semibold text-[hsl(var(--foreground))] group-hover:text-[#81ACEC] transition-colors">{f.title}</h3>
                 <p className="text-xs text-[hsl(var(--muted-foreground))] leading-relaxed">{f.desc}</p>
               </div>
             ))}
@@ -260,7 +282,7 @@ export default function LandingPage() {
         {/* Feature Grid */}
         <section id="features" className="mt-16 pt-12 border-t border-[hsl(var(--border))]">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-6 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] space-y-3">
+            <div className="card-3d p-6 space-y-3 hover:-translate-y-1.5 transition-all duration-200">
               <span className="paper-tag paper-tag-blue">developer insights</span>
               <h3 className="text-base font-semibold text-[hsl(var(--foreground))]">automatic tech stack discovery</h3>
               <p className="text-xs text-[hsl(var(--muted-foreground))] leading-relaxed">
@@ -268,7 +290,7 @@ export default function LandingPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] space-y-3">
+            <div className="card-3d p-6 space-y-3 hover:-translate-y-1.5 transition-all duration-200">
               <span className="paper-tag paper-tag-blue">shareable portfolio</span>
               <h3 className="text-base font-semibold text-[hsl(var(--foreground))]">live public showcase</h3>
               <p className="text-xs text-[hsl(var(--muted-foreground))] leading-relaxed">

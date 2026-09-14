@@ -79,67 +79,93 @@ export default async function DashboardPage() {
   const stepsCompleted = steps.filter((s) => s.done).length;
 
   return (
-    <div className="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
+    <div className="p-4 sm:p-8 space-y-7 max-w-5xl mx-auto w-full">
+      {/* ── 3D Futuristic HUD Header ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.65)] backdrop-blur-md shadow-lg relative overflow-hidden">
+        {/* Ambient header glow */}
+        <div className="absolute top-0 right-1/4 w-72 h-20 bg-[#81ACEC]/15 blur-3xl pointer-events-none" />
+
+        <div className="space-y-1 relative z-10">
           <div className="flex items-center gap-2 font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
-            <span>workspace</span>
-            <span>/</span>
-            <span className="text-[hsl(var(--foreground))]">overview</span>
+            <span className="inline-flex items-center gap-1 text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              SYSTEM.ACTIVE
+            </span>
+            <span>//</span>
+            <span className="text-[hsl(var(--foreground))]">OVERVIEW.CONSOLE</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-medium tracking-tight text-[hsl(var(--foreground))] mt-0.5">
-            welcome back, {firstName.toLowerCase()}
+          <h1 className="text-xl sm:text-3xl font-normal tracking-tight text-[hsl(var(--foreground))] pt-0.5">
+            welcome back, <span className="font-semibold text-[#81ACEC]">{firstName.toLowerCase()}</span>
           </h1>
-          <p className="font-mono text-xs text-[hsl(var(--muted-foreground))] mt-0.5">
-            {hasRepos
-              ? `${repos.length} repositories · ${insightCount} analyzed · ${pendingCount} pending`
-              : "connect your repositories to begin"}
+          <p className="font-mono text-xs text-[hsl(var(--muted-foreground))] flex items-center gap-2">
+            <span>{repos.length} repositories indexed</span>
+            <span>·</span>
+            <span className="text-emerald-500 font-semibold">{insightCount} analyzed</span>
+            {pendingCount > 0 && (
+              <>
+                <span>·</span>
+                <span className="text-amber-500">{pendingCount} pending</span>
+              </>
+            )}
           </p>
         </div>
 
-        {portfolioUrl && portfolio?.isPublic && (
-          <Link
-            href={portfolioUrl}
-            target="_blank"
-            className="paper-btn-secondary text-xs py-1.5 px-3 rounded-lg self-start sm:self-auto"
-          >
-            <Globe className="w-3.5 h-3.5 text-[#81ACEC]" />
-            <span>view live portfolio</span>
-            <ArrowUpRight className="w-3 h-3 opacity-60" />
-          </Link>
-        )}
+        <div className="flex items-center gap-2 relative z-10">
+          {portfolioUrl && portfolio?.isPublic && (
+            <Link
+              href={portfolioUrl}
+              target="_blank"
+              className="paper-btn-secondary text-xs py-2 px-3.5 rounded-xl shadow-xs hover:border-[#81ACEC] hover:shadow-[0_0_15px_rgba(129,172,236,0.25)] transition-all flex items-center gap-2"
+            >
+              <Globe className="w-3.5 h-3.5 text-[#81ACEC]" />
+              <span>live portfolio</span>
+              <ArrowUpRight className="w-3 h-3 opacity-60" />
+            </Link>
+          )}
+        </div>
       </div>
 
-      {/* Checklist Banner */}
+      {/* ── 3D Cybernetic Roadmap Console ── */}
       {stepsCompleted < 4 && (
-        <div className="paper-card p-5 space-y-4">
+        <div className="card-3d p-6 space-y-4 relative overflow-hidden">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="paper-tag paper-tag-blue">setup guide</span>
-              <span className="text-xs font-semibold text-[hsl(var(--foreground))]">onboarding roadmap</span>
+            <div className="flex items-center gap-2.5">
+              <span className="paper-tag paper-tag-blue">MISSION PROTOCOL</span>
+              <span className="text-xs font-semibold text-[hsl(var(--foreground))]">system onboarding pipeline</span>
             </div>
-            <span className="font-mono text-xs text-[hsl(var(--muted-foreground))]">{stepsCompleted}/4 complete</span>
+            <div className="flex items-center gap-2">
+              <div className="w-24 h-1.5 bg-[hsl(var(--muted))] rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-[#81ACEC] to-emerald-400 rounded-full transition-all duration-500 shadow-[0_0_8px_#81ACEC]"
+                  style={{ width: `${(stepsCompleted / 4) * 100}%` }}
+                />
+              </div>
+              <span className="font-mono text-xs text-[hsl(var(--muted-foreground))]">{stepsCompleted}/4 complete</span>
+            </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-2">
+          <div className="grid sm:grid-cols-2 gap-2.5">
             {steps.map((step, i) => (
               <Link
                 key={i}
                 href={step.href}
-                className={`flex items-center gap-2.5 p-2.5 rounded-lg border text-xs transition-colors ${
+                className={`flex items-center gap-3 p-3 rounded-xl border text-xs transition-all ${
                   step.done
-                    ? "border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.3)] text-[hsl(var(--muted-foreground))]"
-                    : "border-[hsl(var(--border))] bg-[hsl(var(--card))] text-[hsl(var(--foreground))] hover:border-[#81ACEC]"
+                    ? "border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.25)] text-[hsl(var(--muted-foreground))]"
+                    : "border-[hsl(var(--border))] bg-[hsl(var(--card))] text-[hsl(var(--foreground))] hover:border-[#81ACEC] hover:shadow-[0_0_12px_rgba(129,172,236,0.15)] hover:translate-x-0.5"
                 }`}
               >
                 {step.done ? (
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                  <div className="w-5 h-5 rounded-md bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                  </div>
                 ) : (
-                  <span className="w-3.5 h-3.5 rounded-full border border-[hsl(var(--border))] shrink-0" />
+                  <div className="w-5 h-5 rounded-md border border-[hsl(var(--border))] flex items-center justify-center shrink-0 font-mono text-[9px] text-[hsl(var(--muted-foreground))]">
+                    0{i + 1}
+                  </div>
                 )}
-                <span className="font-medium text-[11px]">{step.label}</span>
-                {!step.done && <ChevronRight className="w-3 h-3 ml-auto opacity-40" />}
+                <span className="font-medium text-xs">{step.label}</span>
+                {!step.done && <ChevronRight className="w-3.5 h-3.5 ml-auto opacity-50 text-[#81ACEC]" />}
               </Link>
             ))}
           </div>
@@ -148,11 +174,11 @@ export default async function DashboardPage() {
 
       {/* No repos state */}
       {!hasRepos && (
-        <div className="paper-card p-12 text-center space-y-3">
-          <Code2 className="w-8 h-8 text-[hsl(var(--muted-foreground))] mx-auto opacity-50" />
-          <p className="text-sm font-medium text-[hsl(var(--foreground))]">no repositories found</p>
-          <p className="text-xs text-[hsl(var(--muted-foreground))]">
-            import your repositories from github to build your tailored resume and portfolio.
+        <div className="card-3d p-12 text-center space-y-4">
+          <Code2 className="w-10 h-10 text-[#81ACEC] mx-auto opacity-75 animate-bounce" />
+          <p className="text-sm font-semibold text-[hsl(var(--foreground))]">no repositories connected</p>
+          <p className="text-xs text-[hsl(var(--muted-foreground))] max-w-sm mx-auto">
+            import your repositories from github to unleash ai insights, 3d analytics, and automated resume compiling.
           </p>
           <div className="pt-2">
             <ImportButton hasRepos={false} />
@@ -160,90 +186,134 @@ export default async function DashboardPage() {
         </div>
       )}
 
-      {/* Stats row */}
+      {/* ── 3D Stats Row with Holographic Depth ── */}
       {hasRepos && (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <StatsCard label="repositories" value={repos.length} icon={Code2}
-            iconColor="" iconBg="" />
-          <StatsCard label="total stars" value={totalStars} icon={Star}
-            iconColor="" iconBg="" />
-          <StatsCard label="total forks" value={totalForks} icon={GitFork}
-            iconColor="" iconBg="" />
-          <StatsCard label="ai insights" value={insightCount} icon={Sparkles}
-            iconColor="" iconBg=""
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <StatsCard
+            sysId="SYS.01"
+            label="repositories"
+            value={repos.length}
+            icon={Code2}
+          />
+          <StatsCard
+            sysId="SYS.02"
+            label="total stars"
+            value={totalStars}
+            icon={Star}
+          />
+          <StatsCard
+            sysId="SYS.03"
+            label="total forks"
+            value={totalForks}
+            icon={GitFork}
+          />
+          <StatsCard
+            sysId="SYS.04"
+            label="ai insights"
+            value={insightCount}
+            icon={Sparkles}
             delta={pendingCount > 0 ? `${pendingCount} pending` : undefined}
           />
         </div>
       )}
 
-      {/* Charts */}
+      {/* ── 3D Charts Grid ── */}
       {hasRepos && (
         <div className="grid lg:grid-cols-5 gap-4">
-          <div className="lg:col-span-2 paper-card p-5">
-            <div className="flex items-center justify-between mb-4">
+          {/* Language Mix Card */}
+          <div className="lg:col-span-2 card-3d p-5 relative overflow-hidden">
+            <div className="flex items-center justify-between mb-4 border-b border-[hsl(var(--border)/0.5)] pb-3">
               <div>
-                <h2 className="text-xs font-semibold text-[hsl(var(--foreground))]">language mix</h2>
-                <p className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">code distribution across repos</p>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#81ACEC]" />
+                  <h2 className="text-xs font-semibold text-[hsl(var(--foreground))]">language mix</h2>
+                </div>
+                <p className="font-mono text-[10px] text-[hsl(var(--muted-foreground))] mt-0.5">code telemetry across repos</p>
               </div>
-              <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">chart 01</span>
+              <span className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-[hsl(var(--muted))] text-[hsl(var(--muted-foreground))]">CHART // 01</span>
             </div>
             <LanguageDonut data={languageData} />
           </div>
 
-          <div className="lg:col-span-3 paper-card p-5">
-            <div className="flex items-center justify-between mb-4">
+          {/* Push Activity Card */}
+          <div className="lg:col-span-3 card-3d p-5 relative overflow-hidden">
+            <div className="flex items-center justify-between mb-4 border-b border-[hsl(var(--border)/0.5)] pb-3">
               <div>
-                <h2 className="text-xs font-semibold text-[hsl(var(--foreground))]">push activity</h2>
-                <p className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">commits &amp; pushes in last 6 months</p>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#06b6d4]" />
+                  <h2 className="text-xs font-semibold text-[hsl(var(--foreground))]">push velocity</h2>
+                </div>
+                <p className="font-mono text-[10px] text-[hsl(var(--muted-foreground))] mt-0.5">commit cadence (last 6 months)</p>
               </div>
-              <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">chart 02</span>
+              <span className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-[hsl(var(--muted))] text-[hsl(var(--muted-foreground))]">CHART // 02</span>
             </div>
             <ActivityChart data={activityData} />
           </div>
         </div>
       )}
 
-      {/* Top repos */}
+      {/* ── 3D Top Repositories Grid ── */}
       {topRepos.length > 0 && (
-        <div className="space-y-3">
+        <div className="space-y-3.5">
           <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-xs font-semibold text-[hsl(var(--foreground))]">top repositories</h2>
-              <p className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">sorted by stars &amp; complexity</p>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#81ACEC] shadow-[0_0_8px_#81ACEC]" />
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-[hsl(var(--foreground))]">top repositories</h2>
+              <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">({repos.length} indexed)</span>
             </div>
-            <Link href="/repositories" className="font-mono text-[11px] text-[#4a77bf] dark:text-[#9ec2f7] hover:underline flex items-center gap-1">
-              view all ({repos.length}) <ArrowRight className="w-3 h-3" />
+            <Link
+              href="/repositories"
+              className="font-mono text-[11px] text-[#4a77bf] dark:text-[#9ec2f7] hover:underline flex items-center gap-1 group"
+            >
+              <span>manage repositories</span>
+              <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
             {topRepos.map((repo) => (
               <Link
                 key={repo.id}
                 href={`/repositories/${repo.id}`}
-                className="paper-card p-4 space-y-2 block group"
+                className="card-3d p-4 space-y-2.5 block group hover:-translate-y-1 transition-all duration-200"
               >
                 <div className="flex items-start justify-between gap-2">
-                  <p className="text-xs font-semibold text-[hsl(var(--foreground))] group-hover:text-[#4a77bf] dark:group-hover:text-[#9ec2f7] transition-colors truncate">
+                  <p className="text-xs font-semibold text-[hsl(var(--foreground))] group-hover:text-[#81ACEC] transition-colors truncate">
                     {repo.name}
                   </p>
                   {repo.developerInsights?.status === "DONE" ? (
-                    <span className="paper-tag-blue text-[9px] px-1.5 py-0.5 shrink-0">analyzed</span>
+                    <span className="inline-flex items-center gap-1 font-mono text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 shrink-0">
+                      <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" />
+                      analyzed
+                    </span>
                   ) : (
-                    <span className="paper-tag text-[9px] px-1.5 py-0.5 shrink-0">pending</span>
+                    <span className="inline-flex items-center gap-1 font-mono text-[9px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20 shrink-0">
+                      <span className="w-1 h-1 rounded-full bg-amber-400" />
+                      pending
+                    </span>
                   )}
                 </div>
 
-                {repo.description && (
-                  <p className="text-[11px] text-[hsl(var(--muted-foreground))] line-clamp-2 leading-relaxed">
+                {repo.description ? (
+                  <p className="text-[11px] text-[hsl(var(--muted-foreground))] line-clamp-2 leading-relaxed h-8">
                     {repo.description}
+                  </p>
+                ) : (
+                  <p className="text-[11px] text-[hsl(var(--muted-foreground)/0.5)] italic h-8">
+                    no description provided
                   </p>
                 )}
 
-                <div className="flex items-center gap-3 pt-1 font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
-                  {repo.language && <span>{repo.language}</span>}
-                  <span className="flex items-center gap-1"><Star className="w-3 h-3" /> {repo.stars}</span>
-                  <span className="flex items-center gap-1"><GitFork className="w-3 h-3" /> {repo.forks}</span>
+                <div className="flex items-center justify-between pt-2 border-t border-[hsl(var(--border)/0.4)] font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
+                  <div className="flex items-center gap-1.5">
+                    {repo.language && (
+                      <span className="text-[hsl(var(--foreground))] font-medium">{repo.language}</span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex items-center gap-1"><Star className="w-3 h-3 text-amber-400" /> {repo.stars}</span>
+                    <span className="flex items-center gap-1"><GitFork className="w-3 h-3 text-[#81ACEC]" /> {repo.forks}</span>
+                  </div>
                 </div>
               </Link>
             ))}
