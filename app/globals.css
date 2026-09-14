@@ -2,29 +2,29 @@
 @import "tailwindcss";
 
 :root {
-  /* Paper Design System Tokens — Light Mode (Warm tactile cream / oatmeal paper) */
-  --background: 47 18% 91%;          /* #edebe1 */
-  --foreground: 45 6% 12%;           /* #1f1e1a - carbon black */
-  --card: 48 20% 95.5%;             /* #f6f4ed - elevated parchment */
-  --card-foreground: 45 6% 12%;
-  --popover: 48 20% 95.5%;
-  --popover-foreground: 45 6% 12%;
-  --primary: 45 6% 12%;              /* #1f1e1a - crisp ink black button */
-  --primary-foreground: 47 18% 95%;  /* #f6f4ee */
-  --secondary: 46 16% 87%;           /* #e2ded3 */
-  --secondary-foreground: 45 6% 12%;
-  --muted: 46 14% 86%;              /* #dedad0 */
-  --muted-foreground: 42 6% 45%;     /* #75736c - subtle editorial gray */
-  --accent: 215 75% 71%;             /* #81ACEC - Paper signature blueprint blue */
-  --accent-foreground: 45 6% 12%;
+  /* Paper & AuthKit Minimalist System Tokens — Light Mode (Pure White #ffffff) */
+  --background: 0 0% 100%;          /* #ffffff pure white */
+  --foreground: 0 0% 9%;            /* #171717 crisp carbon ink */
+  --card: 0 0% 100%;                /* #ffffff pure card surface */
+  --card-foreground: 0 0% 9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 9%;
+  --primary: 0 0% 9%;               /* #171717 high-contrast action button */
+  --primary-foreground: 0 0% 98%;   /* #fafafa */
+  --secondary: 0 0% 96%;            /* #f5f5f5 */
+  --secondary-foreground: 0 0% 9%;
+  --muted: 0 0% 96%;                /* #f5f5f5 */
+  --muted-foreground: 0 0% 45%;     /* #737373 editorial gray */
+  --accent: 215 75% 60%;            /* #5b8def vibrant blueprint */
+  --accent-foreground: 0 0% 9%;
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
-  --border: 45 12% 82%;              /* #d5d0c2 - crisp hairline border */
-  --input: 45 12% 82%;
-  --ring: 215 75% 71%;
+  --border: 0 0% 89%;               /* #e3e3e3 clean hairline border */
+  --input: 0 0% 89%;
+  --ring: 215 75% 60%;
   --radius: 0.5rem;
 
-  --chart-1: 215 75% 71%;
+  --chart-1: 215 75% 60%;
   --chart-2: 155 45% 42%;
   --chart-3: 38 75% 52%;
   --chart-4: 0 65% 55%;
@@ -32,28 +32,28 @@
 }
 
 .dark {
-  /* Paper Design System Tokens — Dark Mode (Deep obsidian charcoal paper) */
-  --background: 0 0% 4%;             /* #0a0a0a - deep obsidian */
-  --foreground: 46 14% 92%;          /* #eeebe3 - warm soft ivory */
-  --card: 0 0% 7%;                  /* #121211 - dark slate sheet */
-  --card-foreground: 46 14% 92%;
-  --popover: 0 0% 7%;
-  --popover-foreground: 46 14% 92%;
-  --primary: 47 18% 91%;             /* #edebe1 - crisp paper white button */
-  --primary-foreground: 0 0% 7%;     /* #121211 */
-  --secondary: 0 0% 12%;            /* #1f1f1d */
-  --secondary-foreground: 46 14% 92%;
-  --muted: 0 0% 11%;                 /* #1c1c1a */
-  --muted-foreground: 44 6% 54%;     /* #8f8d85 */
-  --accent: 215 75% 71%;             /* #81ACEC - Paper signature blue */
-  --accent-foreground: 46 14% 92%;
+  /* Paper & AuthKit Minimalist System Tokens — Dark Mode (Pure Deep Black #000000) */
+  --background: 0 0% 0%;            /* #000000 pure deep obsidian black */
+  --foreground: 0 0% 98%;           /* #fafafa crisp white */
+  --card: 0 0% 4%;                  /* #0a0a0a elevated dark obsidian card */
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 4%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;              /* #fafafa pure white button */
+  --primary-foreground: 0 0% 4%;    /* #0a0a0a */
+  --secondary: 0 0% 10%;            /* #1a1a1a */
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 10%;                /* #1a1a1a */
+  --muted-foreground: 0 0% 60%;     /* #999999 */
+  --accent: 215 75% 65%;            /* #6b9cf2 blue */
+  --accent-foreground: 0 0% 98%;
   --destructive: 0 62% 40%;
-  --destructive-foreground: 46 14% 92%;
-  --border: 0 0% 14%;               /* #242422 - hairline dark border */
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 14%;               /* #242424 sleek border */
   --input: 0 0% 14%;
-  --ring: 215 75% 71%;
+  --ring: 215 75% 65%;
 
-  --chart-1: 215 75% 71%;
+  --chart-1: 215 75% 65%;
   --chart-2: 155 45% 52%;
   --chart-3: 38 75% 58%;
   --chart-4: 0 65% 60%;

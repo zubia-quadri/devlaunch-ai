@@ -1,9 +1,9 @@
 "use client";
 
-import { CyberGridBackground } from "./CyberGridBackground";
+import { StarFieldBackground } from "./StarFieldBackground";
 
-// Paper & Cyber Architecture background — moving laser grid with living aurora & technical coordinates
+// AuthKit-style living starfield background with smooth upward drift and interactive twinkle
 export function FloatingOrbs() {
-  return <CyberGridBackground />;
+  return <StarFieldBackground />;
 }
 

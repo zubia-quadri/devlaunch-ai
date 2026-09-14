@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Check, Sparkles, FileText, Download, GitFork, ArrowUpRight, Terminal, Zap } from "lucide-react";
 import type { Metadata } from "next";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
-import { CyberGridBackground } from "@/components/ui/CyberGridBackground";
+import { StarFieldBackground } from "@/components/ui/StarFieldBackground";
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[hsl(var(--background))] text-[hsl(var(--foreground))] relative overflow-x-hidden">
-      {/* Dynamic Moving & Shining Cybernetic Grid Background */}
-      <CyberGridBackground />
+      {/* Living AuthKit-style Moving Starfield Background (Dynamic in Light/Dark mode) */}
+      <StarFieldBackground />
 
       {/* Floating Paper Island Navbar */}
       <header className="sticky top-4 z-50 max-w-5xl mx-auto px-4">
@@ -63,7 +63,7 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <main className="relative max-w-5xl mx-auto px-6 pt-16 pb-24 sm:pt-24 sm:pb-32">
+      <main className="relative z-10 max-w-5xl mx-auto px-6 pt-16 pb-24 sm:pt-24 sm:pb-32">
         {/* Floating Lively Badges around Hero */}
         <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-[hsl(var(--card)/0.9)] backdrop-blur-md shadow-lg font-mono text-[11px] text-emerald-500 absolute left-2 top-28 animate-float select-none">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
@@ -84,7 +84,7 @@ export default function LandingPage() {
         <div className="flex justify-center mb-6">
           <div className="paper-tag paper-tag-blue shadow-[0_0_12px_rgba(129,172,236,0.2)]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#81ACEC] animate-pulse" />
-            <span>paper studio edition v2.4 // cyber-grid active</span>
+            <span>paper studio edition v2.5 // starlight canvas active</span>
           </div>
         </div>
 
