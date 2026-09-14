@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevLaunch AI 🚀
+> **The connected resume workspace and portfolio compiler for software engineers.**
 
-## Getting Started
+DevLaunch AI bridges the gap between your real code and your career. Connect your GitHub account, let Gemini AI analyze your repositories and technical depth, and instantly synthesize tailored, ATS-friendly resumes for any job description.
 
-First, run the development server:
+---
+
+## ✨ Features
+
+- **📄 AI-Powered Resume Builder**: Paste any job description from LinkedIn, Indeed, or Naukri. Gemini AI scans your synchronized repositories, selects the top 2–3 matching projects, and drafts achievement-oriented bullet points tailored to the role.
+- **📥 Instant PDF Export**: Download ATS-formatted, printable PDF resumes generated right in your browser with 1-click export.
+- **🔍 Deep Repository Analysis**: Automated architectural scans assessing repository complexity, engineering patterns, and primary tech stacks.
+- **🌐 Public Developer Portfolio**: A responsive, shareable portfolio (`/[username]`) showcasing your GitHub telemetry, language distribution, and highlighted projects.
+- **✨ 3D HUD & AuthKit-Inspired Visuals**: Modern glassmorphism, 3D card tilt physics, telemetry headers, and a 60fps interactive starlight particle background with seamless dark/light mode switching.
+- **🛡️ Secure & Scalable Architecture**: NextAuth.js v5 (Auth.js) with GitHub OAuth, Prisma ORM, in-memory sliding window rate limiting, and zero hardcoded credentials.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router, Turbopack)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **AI Engine**: [Google Gemini API](https://aistudio.google.com/) (`@google/generative-ai`)
+- **Database & ORM**: [Prisma ORM](https://www.prisma.io/) with [PostgreSQL](https://neon.tech)
+- **Authentication**: [NextAuth.js v5](https://authjs.dev/) (GitHub OAuth Provider)
+- **Document Export**: `jspdf` & `html2canvas`
+- **Icons**: [Lucide React](https://lucide.dev/)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/zubia-quadri/devlaunch-ai.git
+cd devlaunch-ai
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment variables
+
+Copy the example environment file and fill in your keys:
+
+```bash
+cp .env.example .env.local
+```
+
+Configure the following variables in `.env.local`:
+
+| Variable | Description | Where to obtain |
+|---|---|---|
+| `AUTH_URL` | Canonical URL of your app | `http://localhost:3000` for local dev |
+| `AUTH_SECRET` | Auth.js session encryption secret | Run `openssl rand -base64 32` |
+| `AUTH_GITHUB_ID` | GitHub OAuth App Client ID | [GitHub Developer Settings](https://github.com/settings/developers) |
+| `AUTH_GITHUB_SECRET` | GitHub OAuth App Client Secret | [GitHub Developer Settings](https://github.com/settings/developers) |
+| `DATABASE_URL` | PostgreSQL connection string | [Neon](https://neon.tech), Supabase, or local Postgres |
+| `GEMINI_API_KEY` | Google Gemini API Key | [Google AI Studio](https://aistudio.google.com/app/apikey) |
+
+### 4. Push database schema
+
+```bash
+npx prisma db push
+```
+
+### 5. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔒 Security & Environment Safety
 
-## Learn More
+- **Zero Secrets Tracked**: All credentials and API keys are stored strictly in `.env.local` (enforced via `.gitignore`).
+- **OAuth Scopes**: Requests only public repository read scopes for GitHub integration.
+- **Rate Limiting**: AI analysis endpoints and resume matchers are protected by sliding-window rate limiters.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is licensed under the [MIT License](LICENSE).
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
