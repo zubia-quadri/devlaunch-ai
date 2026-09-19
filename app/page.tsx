@@ -90,15 +90,15 @@ export default function LandingPage() {
 
         {/* Hero Title & Subtitle with Vibrant Gradient Dimensions */}
         <div className="text-center max-w-3xl mx-auto space-y-5">
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.08] text-slate-900 dark:text-white">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.08] text-[hsl(var(--foreground))]">
             your github is your resume.
             <br />
-            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 dark:from-blue-400 dark:via-indigo-300 dark:to-violet-400 bg-clip-text text-transparent font-semibold">
+            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 dark:from-blue-400 dark:via-indigo-300 dark:to-violet-400 bg-clip-text text-transparent font-bold">
               tailored for every role.
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-600 dark:text-[hsl(var(--muted-foreground))] max-w-xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-[hsl(var(--muted-foreground))] max-w-xl mx-auto leading-relaxed">
             paste any job description. devlaunch analyzes your repositories, selects the 2–3 most relevant projects, and formats an ats-optimized pdf in seconds.
           </p>
 

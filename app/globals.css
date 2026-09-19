@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   /* Paper & AuthKit Minimalist System Tokens — Light Mode (Dimensional Slate & Soft Aurora) */
   --background: 215 25% 97.5%;        /* #f4f6fb subtle luxury slate foundation */

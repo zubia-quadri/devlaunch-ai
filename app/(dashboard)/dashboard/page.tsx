@@ -94,7 +94,7 @@ export default async function DashboardPage() {
             <span>//</span>
             <span className="text-slate-700 dark:text-slate-300 font-medium">OVERVIEW.CONSOLE</span>
           </div>
-          <h1 className="text-xl sm:text-3xl font-normal tracking-tight text-slate-900 dark:text-white pt-0.5">
+          <h1 className="text-xl sm:text-3xl font-normal tracking-tight text-[hsl(var(--foreground))] pt-0.5">
             welcome back, <span className="font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-[#81ACEC] dark:to-cyan-400 bg-clip-text text-transparent">{firstName.toLowerCase()}</span>
           </h1>
           <p className="font-mono text-xs text-slate-500 dark:text-[hsl(var(--muted-foreground))] flex items-center gap-2">

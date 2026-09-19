@@ -99,7 +99,7 @@ export function StatsCard({
       </div>
 
       <div className="flex items-baseline justify-between pt-0.5">
-        <p className="text-3xl font-semibold font-mono text-slate-900 dark:text-white tracking-tight select-none">
+        <p className="text-3xl font-semibold font-mono text-[hsl(var(--foreground))] tracking-tight select-none">
           {isNumber ? (
             <AnimatedCounter value={value as number} duration={600} />
           ) : (
