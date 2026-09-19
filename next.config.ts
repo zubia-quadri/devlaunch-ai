@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
       allowedOrigins: [
         "localhost:3000",
         // Add your production domain here before deploying:
-        // "devlaunch-ai.vercel.app",
+        // "buildfolio.vercel.app",
       ],
     },
   },
