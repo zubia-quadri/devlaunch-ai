@@ -4,7 +4,8 @@ import { prisma } from '@/lib/prisma';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { rateLimit } from '@/lib/rateLimit';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const apiKey = (process.env.GEMINI_API_KEY || "").replace(/^["']|["']$/g, "").trim();
+const genAI = new GoogleGenerativeAI(apiKey);
 
 export async function POST(req: NextRequest) {
   try {
@@ -124,7 +125,12 @@ Respond ONLY with valid JSON in this exact structure:
   ]
 }`;
 
-    const CANDIDATE_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+    const CANDIDATE_MODELS = [
+      'gemini-3.6-flash',
+      'gemini-3.5-flash',
+      'gemini-3.5-flash-lite',
+      'gemini-3.8-flash',
+    ];
     let text = '';
     let lastErr: unknown = null;
 
@@ -194,7 +200,8 @@ Respond ONLY with valid JSON in this exact structure:
 
     return NextResponse.json({ success: true, data: parsed, user });
   } catch (err) {
-    console.error('[resume/match]', err);
-    return NextResponse.json({ error: 'Failed to generate resume. Please try again.' }, { status: 500 });
+    console.error('[resume/match] Error:', err);
+    const message = err instanceof Error ? err.message : 'Failed to generate resume. Please try again.';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
