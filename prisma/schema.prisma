@@ -1,4 +1,4 @@
-// BuildFolio — Prisma Schema
+// DevLaunch AI — Prisma Schema
 // All entities including V2+ future fields (nullable, not surfaced in V1 UI)
 
 generator client {
