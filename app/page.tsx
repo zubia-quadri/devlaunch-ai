@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Check, Sparkles, FileText, Download, GitFork, ArrowUpRight, Terminal, Zap } from "lucide-react";
 import type { Metadata } from "next";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
-import { StarFieldBackground } from "@/components/ui/StarFieldBackground";
+import { FloatingOrbs } from "@/components/ui/FloatingOrbs";
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
@@ -27,12 +27,12 @@ export const metadata: Metadata = {
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[hsl(var(--background))] text-[hsl(var(--foreground))] relative overflow-x-hidden">
-      {/* Living AuthKit-style Moving Starfield Background (Dynamic in Light/Dark mode) */}
-      <StarFieldBackground />
+      {/* Living Atmospheric Aurora Mesh & Dimensional Starlight Background */}
+      <FloatingOrbs />
 
       {/* Floating Paper Island Navbar */}
       <header className="sticky top-4 z-50 max-w-5xl mx-auto px-4">
-        <nav className="flex items-center justify-between px-4 py-2.5 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.88)] backdrop-blur-md shadow-xs">
+        <nav className="flex items-center justify-between px-4 py-2.5 rounded-xl border border-slate-200/80 dark:border-[hsl(var(--border))] bg-white/80 dark:bg-[hsl(var(--card)/0.88)] backdrop-blur-md shadow-sm">
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="w-5 h-5 rounded-[5px] bg-[#81ACEC] flex items-center justify-center shadow-xs transition-transform group-hover:scale-105">
               <div className="w-2 h-2 bg-[hsl(var(--background))] rounded-[1px]" />
@@ -64,57 +64,57 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <main className="relative z-10 max-w-5xl mx-auto px-6 pt-16 pb-24 sm:pt-24 sm:pb-32">
-        {/* Floating Lively Badges around Hero */}
-        <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-[hsl(var(--card)/0.9)] backdrop-blur-md shadow-lg font-mono text-[11px] text-emerald-500 absolute left-2 top-28 animate-float select-none">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+        {/* Floating Lively Badges around Hero with Dimensional Glass & Glow */}
+        <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-white/90 dark:bg-card/90 backdrop-blur-md shadow-[0_4px_20px_rgba(16,185,129,0.18)] font-mono text-[11px] text-emerald-600 dark:text-emerald-400 absolute left-2 top-28 animate-float select-none">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_#10b981]" />
           <span>ATS MATCH: 98%</span>
         </div>
 
-        <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#81ACEC]/35 bg-[hsl(var(--card)/0.9)] backdrop-blur-md shadow-lg font-mono text-[11px] text-[#81ACEC] absolute right-2 top-36 animate-float-delayed select-none">
-          <Sparkles className="w-3.5 h-3.5 text-[#81ACEC]" />
+        <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-500/35 bg-white/90 dark:bg-card/90 backdrop-blur-md shadow-[0_4px_20px_rgba(99,102,241,0.18)] font-mono text-[11px] text-indigo-600 dark:text-[#81ACEC] absolute right-2 top-36 animate-float-delayed select-none">
+          <Sparkles className="w-3.5 h-3.5 text-indigo-500 dark:text-[#81ACEC]" />
           <span>GEMINI 2.5 FLASH</span>
         </div>
 
-        <div className="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-violet-500/35 bg-[hsl(var(--card)/0.9)] backdrop-blur-md shadow-lg font-mono text-[11px] text-violet-400 absolute left-6 bottom-40 animate-float select-none">
-          <Terminal className="w-3.5 h-3.5 text-violet-400" />
+        <div className="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-violet-500/35 bg-white/90 dark:bg-card/90 backdrop-blur-md shadow-[0_4px_20px_rgba(139,92,246,0.18)] font-mono text-[11px] text-violet-600 dark:text-violet-400 absolute left-6 bottom-40 animate-float select-none">
+          <Terminal className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400" />
           <span>3 REPOS SELECTED</span>
         </div>
 
         {/* Technical Status Pill */}
         <div className="flex justify-center mb-6">
-          <div className="paper-tag paper-tag-blue shadow-[0_0_12px_rgba(129,172,236,0.2)]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#81ACEC] animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/25 bg-indigo-500/10 dark:bg-[#81ACEC]/15 font-mono text-[11px] text-indigo-700 dark:text-[#81ACEC] shadow-[0_0_15px_rgba(99,102,241,0.15)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 dark:bg-[#81ACEC] animate-pulse" />
             <span>paper studio edition v2.5 // starlight canvas active</span>
           </div>
         </div>
 
-        {/* Hero Title & Subtitle */}
+        {/* Hero Title & Subtitle with Vibrant Gradient Dimensions */}
         <div className="text-center max-w-3xl mx-auto space-y-5">
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight leading-[1.08] text-[hsl(var(--foreground))]">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.08] text-slate-900 dark:text-white">
             your github is your resume.
             <br />
-            <span className="text-[hsl(var(--muted-foreground))]">
+            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 dark:from-blue-400 dark:via-indigo-300 dark:to-violet-400 bg-clip-text text-transparent font-semibold">
               tailored for every role.
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base text-[hsl(var(--muted-foreground))] max-w-xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-[hsl(var(--muted-foreground))] max-w-xl mx-auto leading-relaxed">
             paste any job description. devlaunch analyzes your repositories, selects the 2–3 most relevant projects, and formats an ats-optimized pdf in seconds.
           </p>
 
-          {/* Action CTAs */}
+          {/* Action CTAs with Depth & Vibrancy */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
             <Link
               href="/login"
-              className="paper-btn-primary w-full sm:w-auto text-xs py-2.5 px-5 rounded-lg shadow-sm hover:shadow-[0_0_20px_rgba(129,172,236,0.3)] transition-all"
+              className="w-full sm:w-auto text-xs py-3 px-6 rounded-xl font-medium text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 hover:from-blue-500 hover:via-indigo-500 hover:to-violet-500 shadow-md shadow-indigo-500/25 hover:shadow-lg hover:shadow-indigo-500/40 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
             >
               <span>build my resume free</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </Link>
 
             <Link
               href="#preview"
-              className="paper-btn-secondary w-full sm:w-auto text-xs py-2.5 px-4 rounded-lg hover:border-[#81ACEC] transition-colors"
+              className="w-full sm:w-auto text-xs py-3 px-5 rounded-xl font-medium border border-slate-300 dark:border-slate-800 bg-white/80 dark:bg-card/80 backdrop-blur-md text-slate-800 dark:text-slate-200 hover:border-indigo-400 hover:bg-slate-50 dark:hover:bg-slate-900 shadow-sm transition-all flex items-center justify-center gap-2"
             >
               <span>explore drafting canvas</span>
               <ArrowUpRight className="w-3.5 h-3.5 opacity-60" />

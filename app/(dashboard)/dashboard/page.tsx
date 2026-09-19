@@ -80,31 +80,31 @@ export default async function DashboardPage() {
 
   return (
     <div className="p-4 sm:p-8 space-y-7 max-w-5xl mx-auto w-full">
-      {/* ── 3D Futuristic HUD Header ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card)/0.65)] backdrop-blur-md shadow-lg relative overflow-hidden">
+      {/* ── 3D Futuristic HUD Header with Dimensional Glass & Gradients ── */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl border border-slate-200/80 dark:border-[hsl(var(--border))] bg-gradient-to-r from-white/95 via-white/90 to-indigo-50/40 dark:from-[hsl(var(--card)/0.85)] dark:to-[hsl(var(--card)/0.65)] backdrop-blur-xl shadow-lg shadow-indigo-500/5 dark:shadow-black/40 relative overflow-hidden">
         {/* Ambient header glow */}
-        <div className="absolute top-0 right-1/4 w-72 h-20 bg-[#81ACEC]/15 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-80 h-28 bg-gradient-to-b from-indigo-500/15 via-sky-400/10 to-transparent blur-3xl pointer-events-none" />
 
-        <div className="space-y-1 relative z-10">
+        <div className="space-y-1.5 relative z-10">
           <div className="flex items-center gap-2 font-mono text-[10px] text-[hsl(var(--muted-foreground))]">
-            <span className="inline-flex items-center gap-1 text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 bg-emerald-500/15 px-2.5 py-0.5 rounded-full border border-emerald-500/30 shadow-[0_0_10px_rgba(16,185,129,0.15)] font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               SYSTEM.ACTIVE
             </span>
             <span>//</span>
-            <span className="text-[hsl(var(--foreground))]">OVERVIEW.CONSOLE</span>
+            <span className="text-slate-700 dark:text-slate-300 font-medium">OVERVIEW.CONSOLE</span>
           </div>
-          <h1 className="text-xl sm:text-3xl font-normal tracking-tight text-[hsl(var(--foreground))] pt-0.5">
-            welcome back, <span className="font-semibold text-[#81ACEC]">{firstName.toLowerCase()}</span>
+          <h1 className="text-xl sm:text-3xl font-normal tracking-tight text-slate-900 dark:text-white pt-0.5">
+            welcome back, <span className="font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-[#81ACEC] dark:to-cyan-400 bg-clip-text text-transparent">{firstName.toLowerCase()}</span>
           </h1>
-          <p className="font-mono text-xs text-[hsl(var(--muted-foreground))] flex items-center gap-2">
+          <p className="font-mono text-xs text-slate-500 dark:text-[hsl(var(--muted-foreground))] flex items-center gap-2">
             <span>{repos.length} repositories indexed</span>
             <span>·</span>
-            <span className="text-emerald-500 font-semibold">{insightCount} analyzed</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{insightCount} analyzed</span>
             {pendingCount > 0 && (
               <>
                 <span>·</span>
-                <span className="text-amber-500">{pendingCount} pending</span>
+                <span className="text-amber-600 dark:text-amber-400 font-semibold">{pendingCount} pending</span>
               </>
             )}
           </p>
