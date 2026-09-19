@@ -24,7 +24,7 @@ export default async function SettingsPage() {
         id: true, name: true, email: true, image: true,
         bio: true, location: true, website: true,
         twitterHandle: true, linkedinUrl: true, githubUsername: true,
-        phone: true, education: true, currentRole: true,
+        phone: true, education: true, certifications: true, achievements: true, currentRole: true,
       },
     }),
     prisma.portfolio.findUnique({ where: { userId } }),
@@ -81,7 +81,9 @@ export default async function SettingsPage() {
           website: user.website, twitterHandle: user.twitterHandle,
           linkedinUrl: user.linkedinUrl, email: user.email,
           image: user.image, githubUsername: user.githubUsername,
-          phone: user.phone, education: user.education, currentRole: user.currentRole,
+          phone: user.phone, education: user.education,
+          certifications: user.certifications, achievements: user.achievements,
+          currentRole: user.currentRole,
         }}
         portfolio={{
           headline: portfolio?.headline ?? null,

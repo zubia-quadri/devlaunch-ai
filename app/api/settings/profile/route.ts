@@ -4,15 +4,17 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
 const profileSchema = z.object({
-  name:          z.string().min(1).max(100).optional(),
-  bio:           z.string().max(500).optional(),
-  location:      z.string().max(100).optional(),
-  website:       z.string().url().or(z.literal("")).optional(),
-  twitterHandle: z.string().max(50).optional(),
-  linkedinUrl:   z.string().url().or(z.literal("")).optional(),
-  phone:         z.string().max(30).optional(),
-  education:     z.string().max(200).optional(),
-  currentRole:   z.string().max(100).optional(),
+  name:           z.string().min(1).max(100).optional(),
+  bio:            z.string().max(500).optional(),
+  location:       z.string().max(100).optional(),
+  website:        z.string().url().or(z.literal("")).optional(),
+  twitterHandle:  z.string().max(50).optional(),
+  linkedinUrl:    z.string().url().or(z.literal("")).optional(),
+  phone:          z.string().max(30).optional(),
+  education:      z.string().max(2000).optional(),
+  certifications: z.string().max(3000).optional(),
+  achievements:   z.string().max(3000).optional(),
+  currentRole:    z.string().max(100).optional(),
 });
 
 export async function PATCH(req: NextRequest) {
@@ -45,6 +47,8 @@ export async function PATCH(req: NextRequest) {
         linkedinUrl: true,
         phone: true,
         education: true,
+        certifications: true,
+        achievements: true,
         currentRole: true,
       },
     });
