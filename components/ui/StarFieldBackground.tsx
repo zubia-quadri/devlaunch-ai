@@ -144,11 +144,14 @@ export function StarFieldBackground() {
         currentAlpha = Math.max(0.12, Math.min(1, currentAlpha));
 
         // Colors:
-        // In dark mode: pure starlight white / slight celestial tint
-        // In light mode: sleek dark slate / carbon particles
-        const r = dark ? 250 : 20;
-        const g = dark ? 252 : 25;
-        const b = dark ? 255 : 35;
+        // In dark mode: pure celestial starlight white
+        // In light mode: delicate luminous slate-blue pearl (never harsh black/dark specks)
+        const r = dark ? 250 : 129;
+        const g = dark ? 252 : 160;
+        const b = dark ? 255 : 210;
+
+        // In light mode, particles should be ethereal, translucent, and calming
+        const effectiveAlpha = dark ? currentAlpha : currentAlpha * 0.42;
 
         // Radial glow halo for special stars
         if (star.hasGlow) {
@@ -165,8 +168,8 @@ export function StarFieldBackground() {
             gradient.addColorStop(0, `rgba(129, 172, 236, ${currentAlpha * 0.45})`);
             gradient.addColorStop(1, "rgba(129, 172, 236, 0)");
           } else {
-            gradient.addColorStop(0, `rgba(15, 23, 42, ${currentAlpha * 0.18})`);
-            gradient.addColorStop(1, "rgba(15, 23, 42, 0)");
+            gradient.addColorStop(0, `rgba(129, 172, 236, ${effectiveAlpha * 0.35})`);
+            gradient.addColorStop(1, "rgba(129, 172, 236, 0)");
           }
           ctx.fillStyle = gradient;
           ctx.beginPath();
@@ -175,14 +178,16 @@ export function StarFieldBackground() {
         }
 
         // Draw star core
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${currentAlpha})`;
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${effectiveAlpha})`;
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         ctx.fill();
 
         // 4-point crosshair sparkle for brighter stars
         if (star.isCrosshair && currentAlpha > 0.55) {
-          ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${currentAlpha * 0.4})`;
+          ctx.strokeStyle = dark
+            ? `rgba(${r}, ${g}, ${b}, ${currentAlpha * 0.4})`
+            : `rgba(129, 172, 236, ${effectiveAlpha * 0.5})`;
           ctx.lineWidth = 0.8;
           const sparkLen = star.radius * 3.0;
 
@@ -208,7 +213,7 @@ export function StarFieldBackground() {
                 const lineAlpha = (1 - dist / 70) * (1 - distToMouse / 140) * 0.25;
                 ctx.strokeStyle = dark
                   ? `rgba(129, 172, 236, ${lineAlpha})`
-                  : `rgba(20, 25, 35, ${lineAlpha})`;
+                  : `rgba(129, 172, 236, ${lineAlpha * 0.5})`;
                 ctx.lineWidth = 0.6;
                 ctx.beginPath();
                 ctx.moveTo(star.x, star.y);
