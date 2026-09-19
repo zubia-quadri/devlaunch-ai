@@ -6,9 +6,9 @@ import { StarFieldBackground } from "./StarFieldBackground";
 export function FloatingOrbs() {
   return (
     <>
-      {/* Dimensional Ambient Aurora Mesh (Soft colored depth in light mode, cosmic nebulas in dark mode) */}
+      {/* Dimensional Ambient Aurora Mesh (Soft colored depth in light mode; completely hidden in dark mode) */}
       <div
-        className="pointer-events-none fixed inset-0 z-0 overflow-hidden select-none"
+        className="pointer-events-none fixed inset-0 z-0 overflow-hidden select-none dark:hidden"
         aria-hidden="true"
       >
         {/* Top-center radiant indigo glow */}

@@ -188,8 +188,12 @@ export function StarFieldBackground() {
           }
         }
 
-        const color = dark ? star.darkColor : star.lightColor;
-        const { r, g, b } = color;
+        // Colors:
+        // In dark mode: pure celestial starlight white (original design)
+        // In light mode: vibrant gemstone starlight
+        const r = dark ? 250 : star.lightColor.r;
+        const g = dark ? 252 : star.lightColor.g;
+        const b = dark ? 255 : star.lightColor.b;
 
         // Radiant 3D Glow Halo for midground & foreground beacons
         if (star.hasGlow) {
@@ -204,7 +208,7 @@ export function StarFieldBackground() {
           );
 
           if (dark) {
-            haloGrad.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha * 0.45})`);
+            haloGrad.addColorStop(0, `rgba(129, 172, 236, ${alpha * 0.45})`);
             haloGrad.addColorStop(0.5, `rgba(129, 172, 236, ${alpha * 0.15})`);
             haloGrad.addColorStop(1, "rgba(129, 172, 236, 0)");
           } else {
@@ -282,13 +286,15 @@ export function StarFieldBackground() {
               const mouseDist = Math.hypot(mouse.x - star.x, mouse.y - star.y);
               if (mouseDist < 150) {
                 const lineAlpha = (1 - dist / 80) * (1 - mouseDist / 150) * 0.35;
-                const grad = ctx.createLinearGradient(star.x, star.y, other.x, other.y);
-                const otherColor = dark ? other.darkColor : other.lightColor;
-
-                grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${lineAlpha})`);
-                grad.addColorStop(1, `rgba(${otherColor.r}, ${otherColor.g}, ${otherColor.b}, ${lineAlpha})`);
-
-                ctx.strokeStyle = grad;
+                if (dark) {
+                  // Original electric blue filaments in dark mode
+                  ctx.strokeStyle = `rgba(129, 172, 236, ${lineAlpha})`;
+                } else {
+                  const grad = ctx.createLinearGradient(star.x, star.y, other.x, other.y);
+                  grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${lineAlpha})`);
+                  grad.addColorStop(1, `rgba(${other.lightColor.r}, ${other.lightColor.g}, ${other.lightColor.b}, ${lineAlpha})`);
+                  ctx.strokeStyle = grad;
+                }
                 ctx.lineWidth = 0.8;
                 ctx.beginPath();
                 ctx.moveTo(star.x, star.y);
