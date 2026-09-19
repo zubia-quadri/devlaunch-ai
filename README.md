@@ -1,7 +1,7 @@
-# DevLaunch AI 🚀
-> **The connected resume workspace and portfolio compiler for software engineers.**
+# BuildFolio 🚀
+> **Turn what you build into your next opportunity.**
 
-DevLaunch AI bridges the gap between your real code and your career. Connect your GitHub account, let Gemini AI analyze your repositories and technical depth, and instantly synthesize tailored, ATS-friendly resumes for any job description.
+BuildFolio bridges the gap between your real code and your career. Connect your GitHub account, let Gemini AI analyze your repositories and technical depth, and instantly synthesize tailored, ATS-friendly resumes for any job description.
 
 ---
 

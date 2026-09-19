@@ -47,7 +47,7 @@ export function Sidebar({ username, name, image, portfolioUsername }: SidebarPro
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-semibold text-sm tracking-tight text-[hsl(var(--foreground))]">devlaunch</span>
+              <span className="font-semibold text-sm tracking-tight text-[hsl(var(--foreground))]">buildfolio</span>
               <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">/studio</span>
             </div>
           </div>

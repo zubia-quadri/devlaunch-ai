@@ -9,7 +9,7 @@ import { SkillRing } from "@/components/skills/SkillRing";
 import { Card3D } from "@/components/ui/Card3D";
 
 export const metadata: Metadata = {
-  title: "Developer Insights — DevLaunch AI Studio",
+  title: "Developer Insights — BuildFolio Studio",
   description: "Your technology skills derived from GitHub repositories.",
 };
 

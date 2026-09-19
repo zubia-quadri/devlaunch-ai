@@ -12,7 +12,7 @@ import { InsightsPanel } from "@/components/insights/InsightsPanel";
 import { GenerateInsightsButton } from "@/components/insights/GenerateInsightsButton";
 import { formatRelativeTime, formatNumber } from "@/lib/utils";
 
-export const metadata: Metadata = { title: "Repository — DevLaunch AI" };
+export const metadata: Metadata = { title: "Repository — BuildFolio" };
 
 export default async function RepoDetailPage({
   params,

@@ -7,7 +7,7 @@ import { ExternalLink } from "lucide-react";
 import { SettingsClient } from "@/components/settings/SettingsClient";
 
 export const metadata: Metadata = {
-  title: "Settings — DevLaunch AI",
+  title: "Settings — BuildFolio",
   description: "Manage your profile and portfolio settings.",
 };
 

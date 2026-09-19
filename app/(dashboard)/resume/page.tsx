@@ -398,7 +398,7 @@ export default function ResumePage() {
                 <textarea
                   value={jdText}
                   onChange={e => setJdText(e.target.value)}
-                  placeholder="Paste the complete job description from LinkedIn, Indeed, Naukri, or employer website...&#10;&#10;DevLaunch AI will extract core competencies, match relevant repositories, synthesize ATS bullets, and format your complete qualifications and certifications."
+                  placeholder="Paste the complete job description from LinkedIn, Indeed, Naukri, or employer website...&#10;&#10;BuildFolio will extract core competencies, match relevant repositories, synthesize ATS bullets, and format your complete qualifications and certifications."
                   rows={9}
                   className="w-full p-3.5 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-xs leading-relaxed text-[hsl(var(--foreground))] outline-none focus:border-[#81ACEC] focus:shadow-[0_0_15px_rgba(129,172,236,0.2)] transition-all resize-none font-mono"
                 />

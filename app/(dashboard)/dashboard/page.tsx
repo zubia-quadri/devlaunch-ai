@@ -14,7 +14,7 @@ import { ImportButton } from "@/components/repository/ImportButton";
 import { formatMonth } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Dashboard — DevLaunch AI Studio",
+  title: "Dashboard — BuildFolio Studio",
   description: "Your developer career overview.",
 };
 

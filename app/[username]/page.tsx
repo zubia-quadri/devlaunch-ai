@@ -25,7 +25,7 @@ export async function generateMetadata({
 
   if (!portfolio || !portfolio.isPublic) {
     return {
-      title: "Portfolio Not Found — DevLaunch AI",
+      title: "Portfolio Not Found — BuildFolio",
       robots: { index: false, follow: false },
     };
   }
@@ -35,9 +35,9 @@ export async function generateMetadata({
   const description =
     portfolio.headline ??
     portfolio.bio?.slice(0, 160) ??
-    `${name}'s developer portfolio on DevLaunch AI`;
+    `${name}'s developer portfolio on BuildFolio`;
   const avatarUrl = portfolio.user.image ?? undefined;
-  const appUrl = process.env.AUTH_URL ?? "https://devlaunch.ai";
+  const appUrl = process.env.AUTH_URL ?? "https://buildfolio.ai";
 
   return {
     title,
@@ -47,7 +47,7 @@ export async function generateMetadata({
       description,
       type: "profile",
       url: `${appUrl}/${username}`,
-      siteName: "DevLaunch AI",
+      siteName: "BuildFolio",
       ...(avatarUrl ? { images: [{ url: avatarUrl, width: 400, height: 400, alt: name }] } : {}),
     },
     twitter: {
@@ -252,7 +252,7 @@ export default async function PublicPortfolioPage({
             href="/"
             className="text-[hsl(var(--primary))] hover:underline"
           >
-            DevLaunch AI
+            BuildFolio
           </a>
         </p>
       </footer>

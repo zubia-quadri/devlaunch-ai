@@ -11,8 +11,8 @@ function GitHubIcon({ className }: { className?: string }) {
 }
 
 export const metadata: Metadata = {
-  title: "Sign In — DevLaunch AI",
-  description: "Sign in to DevLaunch AI with your GitHub account",
+  title: "Sign In — BuildFolio",
+  description: "Sign in to BuildFolio with your GitHub account",
 };
 
 export default function LoginPage() {
@@ -36,9 +36,9 @@ export default function LoginPage() {
                 <Zap className="w-7 h-7 text-[hsl(var(--primary))]" />
               </div>
             </div>
-            <h1 className="text-2xl font-bold gradient-text">DevLaunch AI</h1>
+            <h1 className="text-2xl font-bold gradient-text">BuildFolio</h1>
             <p className="text-xs text-[hsl(var(--muted-foreground))] mt-1 text-center">
-              AI-powered Developer Career Platform
+              Turn what you build into your next opportunity
             </p>
           </div>
 

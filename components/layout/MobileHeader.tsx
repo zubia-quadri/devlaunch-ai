@@ -23,7 +23,7 @@ export function MobileHeader() {
           <div className="w-5 h-5 rounded-md bg-[#81ACEC] flex items-center justify-center shadow-xs">
             <div className="w-2 h-2 bg-[hsl(var(--background))] rounded-[1px]" />
           </div>
-          <span className="font-semibold text-xs tracking-tight text-[hsl(var(--foreground))]">devlaunch</span>
+          <span className="font-semibold text-xs tracking-tight text-[hsl(var(--foreground))]">buildfolio</span>
         </div>
       </div>
 

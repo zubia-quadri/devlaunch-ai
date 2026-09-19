@@ -391,7 +391,7 @@ export function SettingsClient({ profile, portfolio, repos }: SettingsClientProp
               </span>
             </div>
             <p className="text-xs text-[hsl(var(--muted-foreground))]">
-              Your qualifications, certifications, and achievements stay permanently saved here. When generating a tailored resume for any job description, DevLaunch automatically incorporates them with your matched GitHub projects and tailored skills.
+              Your qualifications, certifications, and achievements stay permanently saved here. When generating a tailored resume for any job description, BuildFolio automatically incorporates them with your matched GitHub projects and tailored skills.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4">
@@ -478,7 +478,7 @@ export function SettingsClient({ profile, portfolio, repos }: SettingsClientProp
               onChange={setIsPublic}
               label="Public Portfolio"
               description={isPublic
-                ? `Live at devlaunch.ai/${portfolio.username}`
+                ? `Live at buildfolio.ai/${portfolio.username}`
                 : "Your portfolio is private — only you can see it"}
             />
             <Toggle
