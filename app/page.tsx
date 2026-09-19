@@ -19,7 +19,7 @@ function GitHubIcon({ className }: { className?: string }) {
 }
 
 export const metadata: Metadata = {
-  title: "DevLaunch AI — the connected resume workspace for engineers",
+  title: "buildFolio — the connected resume workspace for engineers",
   description:
     "Paste any job description. AI scans your GitHub projects, picks the best matches, and compiles a tailored resume ready to download.",
 };
@@ -38,7 +38,7 @@ export default function LandingPage() {
               <div className="w-2 h-2 bg-[hsl(var(--background))] rounded-[1px]" />
             </div>
             <div className="flex items-center gap-1">
-              <span className="font-semibold text-xs tracking-tight text-[hsl(var(--foreground))]">devlaunch</span>
+              <span className="font-semibold text-xs tracking-tight text-[hsl(var(--foreground))]">buildFolio</span>
               <span className="font-mono text-[10px] text-[hsl(var(--muted-foreground))]">/ai</span>
             </div>
           </Link>
@@ -99,7 +99,7 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-sm sm:text-base text-[hsl(var(--muted-foreground))] max-w-xl mx-auto leading-relaxed">
-            paste any job description. devlaunch analyzes your repositories, selects the 2–3 most relevant projects, and formats an ats-optimized pdf in seconds.
+            paste any job description. buildFolio analyzes your repositories, selects the 2–3 most relevant projects, and formats an ats-optimized pdf in seconds.
           </p>
 
           {/* Action CTAs */}
@@ -251,7 +251,7 @@ export default function LandingPage() {
               {
                 step: "[01]",
                 title: "import & index",
-                desc: "sign in with github. devlaunch pulls your public repositories, commits, and languages into your private studio index.",
+                desc: "sign in with github. buildFolio pulls your public repositories, commits, and languages into your private studio index.",
               },
               {
                 step: "[02]",
@@ -294,7 +294,7 @@ export default function LandingPage() {
               <span className="paper-tag paper-tag-blue">shareable portfolio</span>
               <h3 className="text-base font-semibold text-[hsl(var(--foreground))]">live public showcase</h3>
               <p className="text-xs text-[hsl(var(--muted-foreground))] leading-relaxed">
-                every member gets an executive public portfolio URL at devlaunch.ai/username to share directly with founders and hiring teams.
+                every member gets an executive public portfolio URL at buildfolio.me/username to share directly with founders and hiring teams.
               </p>
             </div>
           </div>
@@ -328,7 +328,7 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-[hsl(var(--muted-foreground))]">
           <div className="flex items-center gap-2">
             <div className="w-3.5 h-3.5 rounded-[3px] bg-[#81ACEC]" />
-            <span>devlaunch.ai studio</span>
+            <span>buildFolio studio</span>
           </div>
           <div className="flex items-center gap-6">
             <span>built on web standards</span>
